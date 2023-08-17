@@ -69,40 +69,76 @@ const database = {
   ],
   skills: [
     {
-      title: "HTML5",
-      value: 95
-    },
-    {
-      title: "CSS3",
-      value: 90
-    },
-    {
-      title: "Javascript",
+      title: "Rust",
       value: 70
     },
     {
-      title: "jQuery",
-      value: 85
+      title: "Go",
+      value: 70
     },
     {
-      title: "ReactJS",
-      value: 80
+      title: "Google Cloud",
+      value: 60
     },
     {
-      title: "Photoshop",
-      value: 65
+      title: "Python",
+      value: 70
+    },
+    {
+      title: "Kubernetes",
+      value: 50
+    },
+    {
+      title: "Linux",
+      value: 75
     }
   ],
-  portfolios: [
+  portfolio: [
     {
       id: 1,
-      title: "T-shirt Mockup",
-      subtitle: "A beautiful t-shirt mockup.",
-      imageUrl: "/images/portfolio-image-1.jpg",
-      largeImageUrl: ["/images/portfolio-image-1-lg.jpg"],
-      url: 'https://dribbble.com'
+      projectName: "Chronicles",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      directory: {
+        "servicers": {
+          "userManagement": {
+            files: ["userSignup.go", "userDeletion.go", "userGet.go"]
+          }
+        }
+      },
+    },
+    {
+      id: 2,
+      projectName: "TestProject",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      directory: {
+        "src": {
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go"]
+            }
+          }
+        }
+      },
     },
   ],
+  // directory: [
+    //   {
+      //     id: 1,
+      //     filename: "userSignup.go",
+      //     path: "/projects/services/userManagement/userSignup.go",
+      //   },
+    //   {
+      //     id: 2,
+      //     filename: "userDeletion.go",
+      //     path: "/projects/services/userManagement/userDeletion.go",
+      //   },
+    //   {
+      //     id: 3,
+      //     filename: "userGet.go",
+      //     path: "/projects/services/userManagement/userGet.go",
+      //   },
+    // ]
   experience: {
     workingExperience: [
       {
@@ -162,8 +198,8 @@ Mock.onGet("/api/skills").reply(config => {
   return [200, response];
 });
 
-Mock.onGet("/api/portfolios").reply(config => {
-  const response = database.portfolios;
+Mock.onGet("/api/portfolio").reply(config => {
+  const response = database.portfolio;
   return [200, response];
 });
 
