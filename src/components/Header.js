@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import LineIcon from "react-lineicons";
-import ProgressiveImage from "react-progressive-image";
+// import ProgressiveImage from "react-progressive-image";
+// import ImageLoader from './image_loader.js';
+import ProgressiveImage from "react-progressive-graceful-image";
 import { Link, NavLink } from "react-router-dom";
 
 function Header() {
@@ -32,9 +34,9 @@ function Header() {
           <Link to="/">
             <ProgressiveImage
               src={information.brandImage}
-              placeholder="/MyImages/headshot.jpg"
+              placeholde="/MyImages/headshot.jpg"
             >
-              {(src) => <img src={src} alt="brandimage" />}
+            {(src) => <img src={src} alt="brandImage"/>}
             </ProgressiveImage>
           </Link>
         </div>

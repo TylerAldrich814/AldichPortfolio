@@ -3,8 +3,9 @@ import FsLightbox from "fslightbox-react";
 import React, { Suspense, useEffect, useState } from "react";
 import * as Icon from "react-feather";
 import { Helmet } from "react-helmet";
-import ProgressiveImage from "react-progressive-image";
+import ProgressiveImage from "react-progressive-graceful-image";
 // import Slider from "react-slick";
+// import ImageLoader from "../components/image_loader";
 import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
 // import Service from "../components/Service";
@@ -17,7 +18,7 @@ function About() {
   const [services, setServices] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const _sliderSettings = {
+  const sliderSettings = {
     dots: false,
     infinite: true,
     arrows: false,
@@ -73,7 +74,7 @@ function About() {
                 <div className="mi-about-image">
                   <ProgressiveImage
                     src={information.aboutImage}
-                    placeholder="/images/about-image-placeholder.png"
+                    placeholder="about-image-placeholder.png"
                   >
                     {(src) => (
                       <img
