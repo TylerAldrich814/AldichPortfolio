@@ -30,17 +30,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="light-mode">
-        <span className="icon">
-          <Icon.Sun />
-        </span>
-        <button
-          className={
-            lightMode ? "light-mode-switch active" : "light-mode-switch"
-          }
-          onClick={() => handleMode()}
-        ></button>
-      </div>
       <Routes>
         <Route path="/" index element={<Home lightMode={lightMode} />} />
         <Route path="about" element={<About />} />

@@ -98,8 +98,10 @@ const database = {
       id: 1,
       projectName: "Chronicles",
       description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
       directory: {
-        "servicers": {
+        "services": {
           "userManagement": {
             files: ["userSignup.go", "userDeletion.go", "userGet.go"]
           }
@@ -110,14 +112,170 @@ const database = {
       id: 2,
       projectName: "TestProject",
       description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
       directory: {
         "src": {
+          "testDirectory": {
+            files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go",],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+              "testSub": {
+                files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                "testSub": {
+                  files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                },
+              },
+            },
+          },
           "testdir": {
             files: ["test1.go", "test1.go"],
             "testSub": {
-              files: ["deeper1.go", "deeper2.go"]
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
             }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"]
+            }
+          },
+        }
+      },
+    },
+    {
+      id: 3,
+      projectName: "Chronicles",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
+      directory: {
+        "services": {
+          files: ["File1.go"],
+          "userManagement": {
+            files: ["userSignup.go", "userDeletion.go", "userGet.go"]
           }
+        }
+      },
+    },
+    {
+      id: 4,
+      projectName: "TestProject",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
+      directory: {
+        "src": {
+          "testDirectory": {
+            files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go",],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+              "testSub": {
+                files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                "testSub": {
+                  files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                },
+              },
+            },
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"]
+            }
+          },
+        }
+      },
+    },
+    {
+      id: 5,
+      projectName: "Chronicles",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
+      directory: {
+        "services": {
+          files: ["File1.go"],
+          "userManagement": {
+            files: ["userSignup.go", "userDeletion.go", "userGet.go"]
+          }
+        }
+      },
+    },
+    {
+      id: 6,
+      projectName: "TestProject",
+      description: "Chronicles is a Virtual Table Top RPG which allows players to connect over the internet and play RPG Action Role Games. With real time audio, real time messaging(user->room, user->user).",
+      sourcecode: "https://github.com/TylerAldrich814/chronicles",
+      techIcons: "https://skillicons.dev/icons?i=golang,gcp,kubernetes",
+      directory: {
+        "src": {
+          "testDirectory": {
+            files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go",],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+              "testSub": {
+                files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                "testSub": {
+                  files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+                },
+              },
+            },
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"],
+            }
+          },
+          "testdir": {
+            files: ["test1.go", "test1.go"],
+            "testSub": {
+              files: ["deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go","deeper1.go", "deeper2.go"]
+            }
+          },
         }
       },
     },

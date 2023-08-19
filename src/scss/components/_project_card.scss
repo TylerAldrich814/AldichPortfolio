@@ -1,0 +1,117 @@
+@import '../_variables.scss';
+
+.project-card-container {
+  // display: inline-block;
+  // justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px; /* Adjust as needed */
+    margin: 10px;
+}
+
+.project-card {
+  width: 400px;
+  height: 400px;
+  background-color: lighten($color-bg-body, 5);
+  // background: rgba($color-theme, 0.8);
+  color: $color-body;
+  font-align: center;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.project-card-title {
+  margin-left: 40px;
+}
+
+.project-card-body {
+  position: relative;
+  width: 80%;
+  text-align: left;
+  margin: auto;
+
+  .icons {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
+  }
+}
+
+.project-card-desc {
+  padding: 0 8px;
+  border-left: 1px solid lighten($color-body, 5);
+  border-radius: 5px 0 0 5px;
+  p {
+    margin-left: 5px;
+  }
+}
+
+.project-btn-container {
+  display: flex;
+  justify-content: space-around;
+}
+.project-card-link {
+  display: inline-block;
+  text-align: center;
+  color: $color-body;
+  cursor: pointer;
+  padding: 11px 25px;
+  border: 1px solid $color-body
+
+  &:hover {
+    background-color: lighten($color-bg-body, 10);
+    transition: $transition;
+  }
+}
+.project-card-btn, .project-card-link {
+  background-color: lighten($color-bg-body, 8);
+  color: $color-body;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: lighten($color-bg-body, 10);
+    transition: $transition;
+  }
+}
+
+
+.project-button-container {
+  display: inline-block;
+  width: fir-content;
+  overflow: hidden;
+  background: red;
+
+  .project-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: lighten($color-bg-body, 5);
+    color: $color-body;
+    border: none;
+    cursor: pointer;
+    transition: $transition;
+    font-size: 16px;
+  }
+
+  .project-button-before {
+    display: block;
+  }
+
+  .project-button-after {
+    display: none;
+    padding-left: 10px;
+  }
+
+  &:hover {
+    // width: 200px;
+
+    .project-button-before {
+      display: none;
+    }
+    .project-button-after {
+      display: block;
+    }
+  }
+}

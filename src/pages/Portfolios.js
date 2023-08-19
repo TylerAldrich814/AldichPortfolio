@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
+import PortfolioCodeBlock from "../components/CodeBlock.js";
+// import Smalltitle from "../components/Smalltitle";
 import { Helmet } from "react-helmet";
 import DirectoryViewer from "../components/Directory";
 import Layout from "../components/Layout";
-// import Pagination from "../components/Pagination";
-import PortfoliosView from "../components/PortfoliosView";
 import Sectiontitle from "../components/Sectiontitle";
 import Spinner from "../components/Spinner";
+import { SelectedFileProvider , useSelectedFile } from "../components/selectedFile";
+import { SelectProjectProvider , useSelectedProject } from "../components/selectedFile";
+
+import "../scss/components/_project_card.scss"
+import PortfolioCard from "../components/portfolio-card";
 
 const generateFilePaths = (dir, currentPath = "") => {
   const paths = []
@@ -29,72 +34,92 @@ const generateFilePaths = (dir, currentPath = "") => {
 const FilesAndCodeBlock = () => {
   const [projects, setProjects]                     = useState([]);
   const [projectKey, setProjectKey]                 = useState(0);
-  const [selectedFile, onSelectedFile]              = useState("")
-  const [selectedProject, setSelectedProject]       = useState(null)
   const [projectDirectory, setProjectDirectory]     = useState([])
   const [currentProjectName, setCurrentProjectName] = useState("")
   const [filePaths, setFilePaths]                   = useState([])
+  const [currentFilePath, setCurrentFilePath]       = useState("");
+
+  const { selectedFile } = useSelectedFile();
+  const { selectedProject, setSelectedProject } = useSelectedProject();
 
   useEffect(() => {
     axios.get("/api/portfolio").then((resp) => {
       setProjects(resp.data)
       const firstProject = resp.data[0]
-      setSelectedProject(projects[0])
+      setSelectedProject(firstProject)
       setProjectDirectory(firstProject.directory)
       setCurrentProjectName(firstProject.projectName)
       setFilePaths(generateFilePaths(firstProject.directory))
     })
   }, []);
 
-  const handleProjectSelection = (project) => {
-    setSelectedProject(project)
-    const paths = generateFilePaths(project.directory)
-    setCurrentProjectName(project.projectName)
-    setProjectDirectory(project.directory)
-    setFilePaths(paths)
-    setProjectKey(projectKey + 1);
-  };
+  useEffect(() => {
+    // setCurrentFilePath(filePaths.find((path) => {
+    //   let root = "../../public/projects/"
+    //   let fullpath =  root + path.endsWith(selectedFile)
+    //
+    //   console.log(`PATH === ${full}`)
+    //   return fullpath
+    // }));
+    setCurrentFilePath("../../public/projects/services/roomManagement/createRoom.go")
+  }, [selectedFile])
+
+
+  useEffect(() => {
+    if( selectedProject ){
+      const paths = generateFilePaths(selectedProject.directory)
+      setCurrentProjectName(selectedProject.projectName)
+      setProjectDirectory(selectedProject.directory)
+      setFilePaths(paths)
+      setProjectKey(projectKey + 1);
+    }
+  }, [selectedProject])
+
+  const handleBackClick = () => {
+    setSelectedProject(null);
+  }
 
   return (
-    <div
-    className="container"
-    style={{
-      // width: "80%",
-        border: "1px solid red",
-        height: "75vh",
-        position: "absolute",
-    }}>
-    <div className="project-selector">
-    {projects.map((project, index) => (
-      <div key={index} onClick={() => handleProjectSelection(project)}>
-      <h3
-      className="projectName"
-      style={{
-        color: project.projectName == currentProjectName ?
-          "red" : "white",
-          border: project.projectName == currentProjectName ?
-          "1px solid red" : "1px solid white",
-          display: "inline-block",
-          margin: "10px",
-          padding: "10px",
-      }}
-      >{project.projectName}</h3>
-      </div>
-    ))}
+    <div className="container">
+      {selectedProject ? (
+        <div
+          className="project-card-expanded"
+          style={{ width: "75vw", position: "relative" }}
+        >
+          <div className="project-button-container" onClick={handleBackClick}>
+            <div className="project-button">
+              <span className="project-button-before">{selectedProject.projectName}</span>
+              <span className="project-button-after">Go Back</span>
+            </div>
+          </div>
+          <div className="code-block container"
+            style={{
+              display: 'flex',
+              width: "100vw",
+              height: "1000px",
+              border: "1px solid white"
+            }}
+          >
+            <DirectoryViewer
+              projectName={currentProjectName}
+              data={projectDirectory}
+              key={projectKey}
+            >
+            <PortfolioCodeBlock
+              filepath={currentFilePath}
+            />
+            </DirectoryViewer>
+          </div>
+        </div>
+      ) : (
+          <PortfolioCard
+            projects={projects}
+          />
+      )}
     </div>
-    <div className="file-selector">
-    <DirectoryViewer
-      projectName={currentProjectName}
-      data={projectDirectory}
-      key={projectKey}
-    />
-    </div>
-    </div>
-  )
+  );
 }
-
 function Portfolios() {
-
   return (
     <Layout>
       <Helmet>
@@ -108,7 +133,11 @@ function Portfolios() {
         <div className="mi-about mi-section mi-padding-top mi-padding-bottom">
           <div className="container">
             <Sectiontitle title="Portfolio" />
-            <FilesAndCodeBlock />
+            <SelectProjectProvider >
+              <SelectedFileProvider>
+                <FilesAndCodeBlock />
+              </SelectedFileProvider>
+            </SelectProjectProvider >
           </div>
         </div>
       </Suspense>
@@ -116,18 +145,4 @@ function Portfolios() {
   );
 }
 
-// function Port(){
-//   return (
-//     {<PortfoliosView portfolios={currentPortfolios} />}
-//     {!(portfolios.length > portfoliosPerPage) ? null : (
-//         <Pagination
-//           className="mt-50"
-//           itemsPerPage={portfoliosPerPage}
-//           totalItems={portfolios.length}
-//           paginate={paginate}
-//           currentPage={currentPage}
-//         />
-//       )}
-//   )
-// }
 export default Portfolios;

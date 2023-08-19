@@ -1,0 +1,56 @@
+@import '../_variables.scss';
+
+.directory-viewer {
+  display: flex;
+  position: relative;
+}
+.directory-viewer button {
+  position: absolute;
+  top: 12px;
+  left: 0px;
+  color: $light-color-theme;
+  background: lighten($color-bg-body, 5)
+}
+
+.directory {
+  width: 250px;
+  height: 600px;
+  padding-top: 5px;
+  padding-left: 5px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background: lighten($color-bg-body, 5);
+  backdrop-filter: blur(6px) ;
+  border-radius: 0 5px 5px 0;
+  transition: width 0.3s ease;
+  left: 0px;
+  top: 100px;
+  z-index: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.code-block {
+  flex-grow: 1;
+}
+.fileName,.directory-btn {
+  cursor: pointer;
+  margin-left: 8px;
+}
+.fileName, .directory-btn, .directory-name {
+  color: $color-body;
+  font-weight: semi-bold;
+}
+.directory-btn {
+  &:hover {
+    color: $light-color-theme;
+    transition: color 0.3s ease;
+  }
+}
+.fileName {
+  &:hover {
+    font-weight: 600;
+
+    transition: font-weight 0.3s ease;
+  }
+}

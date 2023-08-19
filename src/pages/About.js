@@ -4,12 +4,12 @@ import React, { Suspense, useEffect, useState } from "react";
 import * as Icon from "react-feather";
 import { Helmet } from "react-helmet";
 import ProgressiveImage from "react-progressive-image";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
-import Service from "../components/Service";
+// import Service from "../components/Service";
 import Spinner from "../components/Spinner";
-import Testimonial from "../components/Testimonial";
+// import Testimonial from "../components/Testimonial";
 
 function About() {
   const [toggler, setToggler] = useState(false);
@@ -17,7 +17,7 @@ function About() {
   const [services, setServices] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const sliderSettings = {
+  const _sliderSettings = {
     dots: false,
     infinite: true,
     arrows: false,
@@ -58,10 +58,10 @@ function About() {
   return (
     <Layout>
       <Helmet>
-        <title>About - Chester React Personal Portfolio Template</title>
+        <title>About - Tyler Aldrich</title>
         <meta
           name="description"
-          content="Chester React Personal Portfolio Template About Page"
+          content="TylerAldrich.dev About me"
         />
       </Helmet>
       <Suspense fallback={<Spinner />}>
