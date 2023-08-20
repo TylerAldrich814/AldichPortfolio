@@ -18,6 +18,8 @@ if __name__ == "__main__":
 
     firebase_key = os.environ.get('FIREBASE_STORAGE_KEY')
     if firebase_key != None:
+        print("FIREBASE_STORAGE_KEY FOUND")
+
         with open(keyFilePath, 'w') as keyFile:
             keyFile.write(firebase_key)
 
@@ -31,9 +33,12 @@ if __name__ == "__main__":
         storage_path = f"portfolio/{PROJECTNAME}"
 
         for root, _, files in os.walk(SOURCEDIR):
+            print(f"root: ${root} files: ${files}")
             for file in files:
                 local_file_path = os.path.join(root, file)
                 blob_path = os.path.join(storage_path, os.path.relpath(local_file_path, SOURCEDIR))
                 blob = bucket.blob(blob_path)
                 blob.upload_from_filename(local_file_path)
-
+                print(f'{local_file_path} uplodated to {blob_path}')
+    else:
+        print("FIREBASE_STORAGE_KEY NOT FOUND")
