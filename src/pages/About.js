@@ -4,19 +4,21 @@ import React, { Suspense, useEffect, useState } from "react";
 import * as Icon from "react-feather";
 import { Helmet } from "react-helmet";
 import ProgressiveImage from "react-progressive-graceful-image";
-// import Slider from "react-slick";
-// import ImageLoader from "../components/image_loader";
 import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
-// import Service from "../components/Service";
 import Spinner from "../components/Spinner";
+
+import { useInformation, useImages } from "../providers/DataProvider.js"
+
+// import Slider from "react-slick";
+// import ImageLoader from "../components/image_loader";
+// import Service from "../components/Service";
 // import Testimonial from "../components/Testimonial";
 
 function About() {
-  const [toggler, setToggler] = useState(false);
-  const [information, setInformation] = useState("");
-  const [services, setServices] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  const [toggler, setToggler]         = useState(false);
+  const information = useInformation();
+  const imageUrls = useImages();
 
   const sliderSettings = {
     dots: false,
@@ -40,21 +42,9 @@ function About() {
     ],
   };
 
-  const handleToggler = (event) => {
+  const handleToggler = (_) => {
     setToggler(!toggler);
   };
-
-  useEffect(() => {
-    axios.get("/api/information").then((response) => {
-      setInformation(response.data);
-    });
-    axios.get("/api/services").then((response) => {
-      setServices(response.data);
-    });
-    // axios.get("/api/reviews").then((response) => {
-    //   setReviews(response.data);
-    // });
-  }, []);
 
   return (
     <Layout>
@@ -73,8 +63,7 @@ function About() {
               <div className="col-lg-6">
                 <div className="mi-about-image">
                   <ProgressiveImage
-                    src={information.aboutImage}
-                    placeholder="about-image-placeholder.png"
+                    src={imageUrls.aboutImage}
                   >
                     {(src) => (
                       <img
@@ -89,7 +78,7 @@ function About() {
                   </span>
                   <FsLightbox
                     toggler={toggler}
-                    sources={[information.aboutImageLg]}
+                    sources={[useImages.aboutImageLg]}
                   />
                 </div>
               </div>

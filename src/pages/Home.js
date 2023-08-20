@@ -5,23 +5,25 @@ import Layout from "../components/Layout";
 import Particle from "../components/Particle";
 import Socialicons from "../components/Socialicons";
 import Spinner from "../components/Spinner";
+import { useInformation } from "../providers/DataProvider";
 
 function Home({ lightMode }) {
-  const [information, setInformation] = useState("");
+  // const [information, setInformation] = useState("");
+  const information = useInformation();
 
   useEffect(() => {
-    axios.get("/api/information").then((response) => {
-      setInformation(response.data);
-    });
+    // axios.get("/api/information").then((response) => {
+    //   setInformation(response.data);
+    // });
   }, []);
 
   return (
     <Layout>
       <Helmet>
-        <title>Home - Chester React Personal Portfolio Template</title>
+        <title>Home :: Tyler Aldrich</title>
         <meta
           name="description"
-          content="Chester React Personal Portfolio Template Homepage"
+          content="Tyler Aldrich - Homepage"
         />
       </Helmet>
       <Suspense fallback={<Spinner />}>
@@ -35,7 +37,7 @@ function Home({ lightMode }) {
                     Hi, I am{" "}
                     <span className="color-theme">{information.name}</span>
                   </h1>
-                  <p>{information.aboutContent}</p>
+                  <p>{information.aboutShort}</p>
                   <Socialicons bordered />
                 </div>
               </div>

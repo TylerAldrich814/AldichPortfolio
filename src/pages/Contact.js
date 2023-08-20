@@ -5,8 +5,11 @@ import { Helmet } from "react-helmet";
 import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
 import Spinner from "../components/Spinner";
+import { useContact } from "../providers/DataProvider";
 
 function Contact() {
+  const contact = useContact();
+
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [emailAddress, setEmailAddress] = useState([]);
   const [address, setAddress] = useState([]);
@@ -60,20 +63,23 @@ function Contact() {
   };
 
   useEffect(() => {
-    axios.get("/api/contactinfo").then((response) => {
-      setPhoneNumbers(response.data.phoneNumbers);
-      setEmailAddress(response.data.emailAddress);
-      setAddress(response.data.address);
-    });
+    setPhoneNumbers(contact.phoneNumbers);
+    setEmailAddress(contact.emailAddress);
+    setAddress(contact.address);
+    // axios.get("/api/contactinfo").then((response) => {
+    //   setPhoneNumbers(response.data.phoneNumbers);
+    //   setEmailAddress(response.data.emailAddress);
+    //   setAddress(response.data.address);
+    // });
   }, []);
 
   return (
     <Layout>
       <Helmet>
-        <title>Contact - Chester React Personal Portfolio Template</title>
+        <title>Contact Information :: Tyler Aldrich</title>
         <meta
           name="description"
-          content="Chester React Personal Portfolio Template Contact Page"
+          content="Get intouch with me"
         />
       </Helmet>
       <Suspense fallback={<Spinner />}>

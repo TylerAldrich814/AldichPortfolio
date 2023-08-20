@@ -1,51 +1,47 @@
 import React, {useState, useEffect} from "react";
-import axios from 'axios';
 import LineIcon from 'react-lineicons';
+import { useSocial } from "../providers/DataProvider";
 
 function Socialicons(props){
-  const [socialLinks, setSocialLinks] = useState({});
+  const social = useSocial();
 
   useEffect(() => {
-    axios.get('/api/information')
-      .then(response =>{
-        setSocialLinks(response.data.socialLinks);
-      })
   }, [])
 
   return (
     <ul className={props.bordered ? 'mi-socialicons mi-socialicons-bordered' : 'mi-socialicons'}>
-      {!socialLinks.facebook ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.facebook}>
+      {!social.facebook ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.facebook}>
           <LineIcon name="facebook"/>
         </a>
       </li>}
-      {!socialLinks.twitter ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.twitter}>
+      {!social.twitter ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.twitter}>
           <LineIcon name="twitter"/>
         </a>
       </li>}
-      {!socialLinks.pinterest ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.pinterest}>
+      {!social.pinterest ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.pinterest}>
           <LineIcon name="pinterest"/>
         </a>
       </li>}
-      {!socialLinks.behance ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.behance}>
+      {!social.behance ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.behance}>
           <LineIcon name="behance"/>
         </a>
       </li>}
-      {!socialLinks.linkedin ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.linkedin}>
+      {!social.linkedin ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.linkedin}>
           <LineIcon name="linkedin"/>
         </a>
       </li>}
-      {!socialLinks.dribbble ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.dribbble}>
+      {!social.dribbble ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.dribbble}>
           <LineIcon name="dribbble"/>
         </a>
       </li>}
-      {!socialLinks.github ? null : <li>
-        <a rel="noopener noreferrer" target="_blank" href={socialLinks.github}>
+      {!social.github ? null : <li>
+        <a rel="noopener noreferrer" target="_blank" href={social.github}>
           <LineIcon name="github"/>
         </a>
       </li>}

@@ -5,16 +5,16 @@
 # /.gitignore
 # dependencies
 /node_modules
-/Documentation
 /.pnp
 .pnp.js
 /package-lock.json
 # testing
 /coverage
+/firebase_cred.js
 
 # production
 /build
-/public
+/public/*
 /src/blog
 
 # misc

@@ -1,8 +1,5 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-graceful-image";
-// import ProgressiveImage from "react-progressive-image";
-// import ImageLoader from "../hook/image_loader";
-// import ImageLoader from './image_loader.js';
 import { Link } from "react-router-dom";
 
 function Blog(props) {

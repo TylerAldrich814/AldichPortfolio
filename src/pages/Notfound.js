@@ -8,10 +8,10 @@ function Notfound() {
   return (
     <Layout>
       <Helmet>
-        <title>404 - Chester React Personal Portfolio Template</title>
+        <title>404 - Tyler Aldrich Portfolio</title>
         <meta
           name="description"
-          content="Chester React Personal Portfolio Template Not Found Page"
+          content="Tyler Aldrich - Not Found Page"
         />
       </Helmet>
       <Suspense fallback={<Spinner />}>

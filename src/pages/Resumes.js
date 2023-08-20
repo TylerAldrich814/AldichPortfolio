@@ -8,20 +8,26 @@ import Resume from "../components/Resume";
 import Sectiontitle from "../components/Sectiontitle";
 import Smalltitle from "../components/Smalltitle";
 import Spinner from "../components/Spinner";
+import { useSkills, useExperience } from "../providers/DataProvider";
 
 function Resumes() {
-  const [skills, setSkills] = useState([]);
+  const skills = useSkills();
+  const experience = useExperience();
   const [workingExperience, setWorkingExperience] = useState([]);
-  const [educationExperience, setEducationExperience] = useState([]);
+  // const [skills, setSkills] = useState([]);
+  // const [workingExperience, setWorkingExperience] = useState([]);
+  // const [educationExperience, setEducationExperience] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/skills").then((response) => {
-      setSkills(response.data);
-    });
-    axios.get("/api/experience").then((response) => {
-      setWorkingExperience(response.data.workingExperience);
-      setEducationExperience(response.data.educationExperience);
-    });
+    setWorkingExperience(experience.workingExperience);
+
+    // axios.get("/api/skills").then((response) => {
+    //   setSkills(response.data);
+    // });
+    // axios.get("/api/experience").then((response) => {
+    //   setWorkingExperience(response.data.workingExperience);
+    //   // setEducationExperience(response.data.educationExperience);
+    // });
   }, []);
 
   return (
@@ -62,17 +68,18 @@ function Resumes() {
               ))}
             </div>
             <div className="mt-30"></div>
-            <Smalltitle title="Educational Qualifications" icon="book" />
-            <div className="mi-resume-wrapper">
-              {educationExperience.map((educatonExp) => (
-                <Resume key={educatonExp.id} resumeData={educatonExp} />
-              ))}
-            </div>
           </div>
         </div>
       </Suspense>
     </Layout>
   );
 }
+  // Education
+            // <Smalltitle title="Education" icon="book" />
+            // <div className="mi-resume-wrapper">
+            //   {educationExperience.map((educatonExp) => (
+            //     <Resume key={educatonExp.id} resumeData={educatonExp} />
+            //   ))}
+            // </div>
 
 export default Resumes;

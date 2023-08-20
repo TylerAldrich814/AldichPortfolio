@@ -1,9 +1,22 @@
 import Mock from "../mock";
+import { getContactInfo, getExperienceInfo, getInformation, getSkillsInfo, getPortfolio, getSocialLinks} from "./firestore.js"
+
+const ImageUrls = {
+  Images: {
+    brandImage:   'images/brand-image.jpg',
+    aboutImage:   'images/about-image.jpg',
+    aboutImageLg: 'images/about-image-lg.jpg',
+    aboutImagePlaceHolder: 'images/about-image-placeholder.png',
+    portfolioPlaceHolder: 'images/portfolio-image-placeholder.png',
+  },
+}
 
 const database = {
   information: {
     name: 'Tyler Aldrich',
-    aboutContent: "I am an inspiring Backend Developer. A father to a beautiful little girl. I am engaged to the love of my life. I am extremely motivated and inspired to make the best of this life, for me and my family.",
+    // aboutContent: "I am an inspiring Backend Developer. A father to a beautiful little girl. I am engaged to the love of my life. I am extremely motivated and inspired to make the best of this life, for me and my family.",
+    aboutShort: "I am Backend Developer with a passion for learning new technologies and the drive to become the best developer than I can.",
+    aboutContent: "I am an aspiring Backend Developer with a passion for learning new technologies and the drive to become the best developer that I can. Through rigorous self-study and hands-on experience, I have honed my expertise in Go, Rust, Google Cloud, Docker, and Kubernetes. My commitment to continuous growth reflects my readiness to adapt to the ever-evolving field of technology. On a personal note, I'm a devoted father to a wonderful little girl and engaged to the love of my life. My family is my inspiration, motivating me to pursue excellence in my career and make the most of life's opportunities.",
     age: 30,
     phone: '(814)651-1772',
     nationality: 'American',
@@ -19,10 +32,10 @@ const database = {
     // brandImage: '/MyImages/headshot.jpg',
     // aboutImage: '/MyImages/headshot.jpg',
     // aboutImageLg: '/MyImages/headshot.jpg',
-    brandImage: '/images/brand-image.jpg',
-    aboutImage: '/images/about-image.jpg',
-    aboutImageLg: '/images/about-image-lg.jpg',
-    cvfile: '/files/Tyler_Aldrich_Resume2023.pdf'
+    brandImage: '/images/brand-image.jpg',  // Need to load in a different way
+    aboutImage: '/images/about-image.jpg',  // Need to load in a different way
+    aboutImageLg: '/images/about-image-lg.jpg',  // Need to load in a different way
+    cvfile: '/files/Tyler_Aldrich_Resume2023.pdf'  // Need to load in a different way
   },
   services: [
     {
@@ -335,43 +348,62 @@ const database = {
   }
 }
 
-
-Mock.onGet("/api/information").reply(config => {
-  const response = database.information;
+// Firebase Connections
+Mock.onGet("/api/contactinfo").reply(async _ => {
+  const response = await getContactInfo();
+  return [200, response];
+});
+Mock.onGet("/api/information").reply(async _ => {
+  const response = await getInformation()
   return [200, response];
 });
 
-Mock.onGet("/api/services").reply(config => {
-  const response = database.services;
+Mock.onGet("/api/skills").reply(async _ => {
+  const response = await getSkillsInfo();
   return [200, response];
 });
 
-Mock.onGet("/api/reviews").reply(config => {
-  const response = database.reviews;
+Mock.onGet("/api/experience").reply(async _ => {
+  const response = await getExperienceInfo();
   return [200, response];
 });
 
-Mock.onGet("/api/skills").reply(config => {
-  const response = database.skills;
+Mock.onGet("/api/experience").reply(async _ => {
+  const response = await getExperienceInfo();
   return [200, response];
 });
 
-Mock.onGet("/api/portfolio").reply(config => {
+Mock.onGet("/api/socialLinks").reply(async _ => {
+  const response = await getSocialLinks();
+  return [200, response];
+})
+
+Mock.onGet("/api/images").reply(_ => {
+  const response = ImageUrls;
+  return [200, response];
+})
+
+
+
+// --------------------
+Mock.onGet("/api/services").reply(_ => {
+    const response = database.services;
+    return [200, response];
+  });
+
+  Mock.onGet("/api/reviews").reply(_ => {
+      const response = database.reviews;
+      return [200, response];
+    });
+
+Mock.onGet("/api/portfolio").reply(_ => {
   const response = database.portfolio;
   return [200, response];
 });
 
-Mock.onGet("/api/experience").reply(config => {
-  const response = database.experience;
-  return [200, response];
-});
 
-Mock.onGet("/api/blog").reply(config => {
+Mock.onGet("/api/blog").reply(_ => {
   const response = database.blogs;
   return [200, response];
 });
 
-Mock.onGet("/api/contactinfo").reply(config => {
-  const response = database.contactInfo;
-  return [200, response];
-});
