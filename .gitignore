@@ -11,11 +11,13 @@
 # testing
 /coverage
 /firebase_cred.js
+/aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
 
 # production
 /build
 /public/*
 /src/blog
+/src/firebaseCredentials.js
 
 # misc
 .DS_Store

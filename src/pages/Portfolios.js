@@ -40,13 +40,12 @@ const FilesAndCodeBlock = () => {
   const [currentFilePath, setCurrentFilePath]       = useState("");
 
   const { selectedFile } = useSelectedFile();
-  const { selectedProject, setSelectedProject } = useSelectedProject();
+  const { selectedProject, setSelectedProject } = useSelectedProject(null);
 
   useEffect(() => {
     axios.get("/api/portfolio").then((resp) => {
       setProjects(resp.data)
       const firstProject = resp.data[0]
-      setSelectedProject(firstProject)
       setProjectDirectory(firstProject.directory)
       setCurrentProjectName(firstProject.projectName)
       setFilePaths(generateFilePaths(firstProject.directory))
@@ -61,7 +60,6 @@ const FilesAndCodeBlock = () => {
     //   console.log(`PATH === ${full}`)
     //   return fullpath
     // }));
-    setCurrentFilePath("../../public/projects/services/roomManagement/createRoom.go")
   }, [selectedFile])
 
 

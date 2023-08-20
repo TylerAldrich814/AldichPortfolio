@@ -1,28 +1,31 @@
-name: Upload to Firebase Storage
+# Will need to figure out later..
+# name: Upload to Firebase Storage
+#
+name: Upload Repo to Firebase Storage
 
 on:
   push:
     branches:
-      - main
+      - main # Replace with your branch name if different
 
 jobs:
   upload:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0.2.1
+    - name: Set Up Python
+      uses: actions/setup-python@v2
       with:
-        service_account_key: ${{ secrets.FIREBASE_KEY }}
-        serviceCredentialFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-        export_default_credentials: true
-    - name: Authenticate with Firebase
-      run: gcloud auth activate-service-account --key-file=${{ secrets.FIREBASE_KEY }}
+        python-version: 3.8 # Change this if you're using a different version
 
-    - name: Upload to Firebase Storage
+    - name: Install Dependencies
       run: |
-        gsutil -m cp -r ./src/* gs://aldrich-dev-portfolio.appspot.com/projects/portfolio
+         pip install firebase_admin
+
+    - name: Run Upload Script
+      run: python firebaseStorage.py
+      env:
+        FIREASE_KEY: ${{ secrets.FIREBASE_STORAGE_KEY }}
 

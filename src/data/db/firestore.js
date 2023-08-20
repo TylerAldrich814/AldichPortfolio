@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {doc, getDoc, getFirestore} from "firebase/firestore";
-import { firebaseConfig } from "../../firebase_cred";
+import { firebaseConfig  } from '../../firebaseCredentials.js'
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -37,7 +37,7 @@ export const getSocialLinks = async() => {
 };
 
 export const getPortfolio = async () => {
-  const portfolioRef = doc(db, "portfolio", PORTFOLIO)
+  const portfolioRef = doc(db, "portfolio", "portfolio")
   const portfolioDoc = await getDoc(portfolioRef);
   return portfolioDoc.exists() ? portfolioDoc.data() : null;
 };
