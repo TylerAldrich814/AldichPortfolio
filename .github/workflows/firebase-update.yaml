@@ -18,6 +18,8 @@ jobs:
       with:
         service_account_key: ${{ secrets.FIREBASE_KEY }}
         export_default_credentials: true
+    - name: Authenticate with Firebase
+      run: gcloud auth activate-service-account --key-file=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
     - name: Upload to Firebase Storage
       run: |
