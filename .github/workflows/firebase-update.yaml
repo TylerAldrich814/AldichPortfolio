@@ -12,7 +12,8 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     env:
-      MY_SECRET: ${{ secretes.FIREBASE_64 }}
+      MY_SECRET: ${{ secrets.FIREBASE_64  }}
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -26,6 +27,9 @@ jobs:
 
     - name: Create Directory
       run: mkdir -p /Users/runner/work/_temp
+
+    - name: Create Secret File
+      run: echo '{"secret_key": "${{ secrets.MY_SECRET }}"}' > /Users/runner/work/_temp
 
       # Write the Credential json secret key from git_secret
     - name: Get Secret Key
