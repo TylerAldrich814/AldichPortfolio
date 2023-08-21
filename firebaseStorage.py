@@ -55,3 +55,4 @@ if __name__ == "__main__":
                 blob = bucket.blob(blob_path)
                 blob.upload_from_filename(local_file_path)
                 print(f'{local_file_path} uplodated to {blob_path}')
+    UploadFiles()
