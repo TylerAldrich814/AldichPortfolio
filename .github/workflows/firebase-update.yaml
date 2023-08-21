@@ -22,9 +22,6 @@ jobs:
     - run: |
          pip install firebase_admin
 
-    - name: Create Directory
-      run: mkdir -p /Users/runner/work/_temp
-
     - name: Run Upload Script
       env:
         FIREBASE_64: ${{ secrets.FIREBASE_64 }}
