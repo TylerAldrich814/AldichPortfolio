@@ -1,44 +1,47 @@
 import firebase_admin
 from firebase_admin import credentials, storage
 import os
-# import sys
-# from uuid import uuid4
+from uuid import uuid4
+import sys
 
 BUCKETPATH = "aldrich-dev-portfolio.appspot.com"
 PROJECTNAME = "portfolio"
 SOURCEDIR   = "src/"
 IGNORE = ["firebase_cred.js"]
+KEYFILENAME = '/aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json'
+GITHUBTEMPPATH = '/Users/runner/work/_temp'
+# -----------------------------------------------------------------------------
 
+
+# First, we get our Github Firebase Secret credentials, and decode it back into
+# it's original file. Which we then use to verify our Credentials with Firebase.
+# At which point, we update our Project files on our Firebase Storage for your
+# portfolio.
 if __name__ == "__main__":
 # I should be able to turn this into a Github Action file
-    githubTempPath = '/Users/runner/work/_temp'
-    keyFilePath = './aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json'
+    # firebase_key = os.environ.get('FIREBASE_STORAGE_KEY')
 
-    keyFilePath = '/tmp/firebase_key.json'
+    print(" -> STARTING FIREBASE STORAGE FILE TRANSFER.")
+    # with open(keyFilePath, 'w') as keyFile:
+    #     keyFile.write(firebase_key)
 
-    firebase_key = os.environ.get('FIREBASE_STORAGE_KEY')
-    if firebase_key != None:
-        print("FIREBASE_STORAGE_KEY FOUND")
+    keyFilePath = GITHUBTEMPPATH + KEYFILENAME;
 
-        with open(keyFilePath, 'w') as keyFile:
-            keyFile.write(firebase_key)
+    cred = credentials.Certificate(keyFilePath)
+    firebase_admin.initialize_app(cred, {
+        'storageBucket' : f"{BUCKETPATH}"
+    })
+    print(" -> SUCCESSFULLY INITIALIZED FIREBASE APP.")
 
-        cred = credentials.Certificate(keyFilePath)
-        firebase_admin.initialize_app(cred, {
-            'storageBucket' : f"{BUCKETPATH}"
-        })
+    bucket = storage.bucket()
 
-        bucket = storage.bucket()
+    storage_path = f"portfolio/{PROJECTNAME}"
 
-        storage_path = f"portfolio/{PROJECTNAME}"
-
-        for root, _, files in os.walk(SOURCEDIR):
-            print(f"root: ${root} files: ${files}")
-            for file in files:
-                local_file_path = os.path.join(root, file)
-                blob_path = os.path.join(storage_path, os.path.relpath(local_file_path, SOURCEDIR))
-                blob = bucket.blob(blob_path)
-                blob.upload_from_filename(local_file_path)
-                print(f'{local_file_path} uplodated to {blob_path}')
-    else:
-        print("FIREBASE_STORAGE_KEY NOT FOUND")
+    for root, _, files in os.walk(SOURCEDIR):
+        print(f"root: ${root} files: ${files}")
+        for file in files:
+            local_file_path = os.path.join(root, file)
+            blob_path = os.path.join(storage_path, os.path.relpath(local_file_path, SOURCEDIR))
+            blob = bucket.blob(blob_path)
+            blob.upload_from_filename(local_file_path)
+            print(f'{local_file_path} uplodated to {blob_path}')

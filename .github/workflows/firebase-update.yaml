@@ -15,17 +15,21 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Set Up Python
+    - name: Set Up Python and Install Dependencies
       uses: actions/setup-python@v2
       with:
         python-version: 3.8 # Change this if you're using a different version
-
-    - name: Install Dependencies
-      run: |
+    - run: |
          pip install firebase_admin
+
+  # Write the Credential json secret key from git_secret
+    - name: Get Secret Key
+      id: write_key_file
+      uses: timheuer/base64-to-file@v1
+      with:
+        filename: aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
+        encodeString: ${{ secrets.FIREBASE_64 }}
 
     - name: Run Upload Script
       run: python firebaseStorage.py
-      env:
-        FIREASE_KEY: ${{ secrets.FIREBASE_STORAGE_KEY }}
 
