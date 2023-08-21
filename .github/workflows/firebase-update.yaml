@@ -11,10 +11,15 @@ on:
 jobs:
   upload:
     runs-on: ubuntu-latest
-    env:
-      MY_SECRET: ${{ secrets.FIREBASE_64  }}
-
     steps:
+    - name: Firebase Credentials
+      with:
+        credentials: ${{ secrets.FIREBASE_64 }}
+      env:
+        credentials: ${{ secrets.FIREBASE_64 }}
+      run: |
+        echo "{ \"my_secret\": "\${{ secrets.FIREBASE_64 }}"\ }" > /Users/runner/work/_temp
+
     - name: Checkout Code
       uses: actions/checkout@v2
 
@@ -27,9 +32,6 @@ jobs:
 
     - name: Create Directory
       run: mkdir -p /Users/runner/work/_temp
-
-    - name: Create Secret File
-      run: echo '{"secret_key": "${{ secrets.MY_SECRET }}"}' > /Users/runner/work/_temp
 
       # Write the Credential json secret key from git_secret
     - name: Get Secret Key
