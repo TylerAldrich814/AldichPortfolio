@@ -11,7 +11,11 @@ on:
 jobs:
   upload:
     runs-on: ubuntu-latest
+    env:
+      MY_SECRET: ${{ secretes.FIREBASE_64 }}
     steps:
+    - name: Echo secret > my_secret.json
+      run: echo '{"secret_key":${{ secrets.MY_SECRET }}}' > /Users/runner/work/_temp/my_secret.json
     - name: Checkout Code
       uses: actions/checkout@v2
 
@@ -27,7 +31,8 @@ jobs:
       id: write_key_file
       uses: timheuer/base64-to-file@v1
       with:
-        filename: aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
+        # filename: aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
+        filename: my_secret.json
         encodedString: ${{ secrets.FIREBASE_64 }}
 
 

@@ -8,7 +8,8 @@ BUCKETPATH = "aldrich-dev-portfolio.appspot.com"
 PROJECTNAME = "portfolio"
 SOURCEDIR   = "src/"
 IGNORE = ["firebase_cred.js"]
-KEYFILENAME = '/aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json'
+# KEYFILENAME = '/aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json'
+KEYFILENAME = 'my_secret.json'
 GITHUBTEMPPATH = '/Users/runner/work/_temp'
 # -----------------------------------------------------------------------------
 
