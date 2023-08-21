@@ -12,12 +12,6 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-    - name: Firebase Credentials
-      with:
-        credentials: ${{ secrets.FIREBASE_64 }}
-      env:
-        credentials: ${{ secrets.FIREBASE_64 }}
-
     - name: Checkout Code
       uses: actions/checkout@v2
 
@@ -31,15 +25,8 @@ jobs:
     - name: Create Directory
       run: mkdir -p /Users/runner/work/_temp
 
-      # Write the Credential json secret key from git_secret
-    # - name: Get Secret Key
-    #   id: write_key_file
-    #   uses: timheuer/base64-to-file@v1
-    #   with:
-    #     filename: /Users/runner/worl/_temp/firebase_key.json
-    #     encodedString: ${{ secrets.FIREBASE_64 }}
-
-
     - name: Run Upload Script
+      env:
+        FIREBASE_64: ${{ secrets.FIREBASE_64 }}
       run: python firebaseStorage.py
 
