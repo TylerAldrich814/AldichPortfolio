@@ -28,7 +28,8 @@ jobs:
       uses: timheuer/base64-to-file@v1
       with:
         filename: aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
-        encodeString: ${{ secrets.FIREBASE_64 }}
+        encodedString: ${{ secrets.FIREBASE_64 }}
+
 
     - name: Run Upload Script
       run: python firebaseStorage.py
