@@ -17,8 +17,6 @@ jobs:
         credentials: ${{ secrets.FIREBASE_64 }}
       env:
         credentials: ${{ secrets.FIREBASE_64 }}
-      run: |
-        echo "{ \"my_secret\": "\${{ secrets.FIREBASE_64 }}"\ }" > /Users/runner/work/_temp
 
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -34,12 +32,12 @@ jobs:
       run: mkdir -p /Users/runner/work/_temp
 
       # Write the Credential json secret key from git_secret
-    - name: Get Secret Key
-      id: write_key_file
-      uses: timheuer/base64-to-file@v1
-      with:
-        filename: aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
-        encodedString: ${{ secrets.FIREBASE_64 }}
+    # - name: Get Secret Key
+    #   id: write_key_file
+    #   uses: timheuer/base64-to-file@v1
+    #   with:
+    #     filename: /Users/runner/worl/_temp/firebase_key.json
+    #     encodedString: ${{ secrets.FIREBASE_64 }}
 
 
     - name: Run Upload Script

@@ -20,29 +20,38 @@ GITHUBTEMPPATH = '/Users/runner/work/_temp'
 # portfolio.
 if __name__ == "__main__":
 # I should be able to turn this into a Github Action file
-    # firebase_key = os.environ.get('FIREBASE_STORAGE_KEY')
+    def UploadFiles():
+        # firebase_key = os.environ.get('FIREBASE_STORAGE_KEY')
+        keyFilePath = '/Users/runner/work/_temp/firebase_key.json'
+        firebase_key = os.environ.get('FIREBASE_AUTH') or ""
+        if firebase_key == "":
+            print(" -> FAILED TO FETCH FIREBASE AUTHENTICATION KEY")
+            return
 
-    print(" -> STARTING FIREBASE STORAGE FILE TRANSFER.")
-    # with open(keyFilePath, 'w') as keyFile:
-    #     keyFile.write(firebase_key)
+        with open(keyFilePath, 'w') as keyFile:
+            keyFile.write(firebase_key)
 
-    keyFilePath = GITHUBTEMPPATH + KEYFILENAME;
+        print(" -> STARTING FIREBASE STORAGE FILE TRANSFER.")
+        # with open(keyFilePath, 'w') as keyFile:
+        #     keyFile.write(firebase_key)
 
-    cred = credentials.Certificate(keyFilePath)
-    firebase_admin.initialize_app(cred, {
-        'storageBucket' : f"{BUCKETPATH}"
-    })
-    print(" -> SUCCESSFULLY INITIALIZED FIREBASE APP.")
+        keyFilePath = GITHUBTEMPPATH + KEYFILENAME;
 
-    bucket = storage.bucket()
+        cred = credentials.Certificate(keyFilePath)
+        firebase_admin.initialize_app(cred, {
+            'storageBucket' : f"{BUCKETPATH}"
+        })
+        print(" -> SUCCESSFULLY INITIALIZED FIREBASE APP.")
 
-    storage_path = f"portfolio/{PROJECTNAME}"
+        bucket = storage.bucket()
 
-    for root, _, files in os.walk(SOURCEDIR):
-        print(f"root: ${root} files: ${files}")
-        for file in files:
-            local_file_path = os.path.join(root, file)
-            blob_path = os.path.join(storage_path, os.path.relpath(local_file_path, SOURCEDIR))
-            blob = bucket.blob(blob_path)
-            blob.upload_from_filename(local_file_path)
-            print(f'{local_file_path} uplodated to {blob_path}')
+        storage_path = f"portfolio/{PROJECTNAME}"
+
+        for root, _, files in os.walk(SOURCEDIR):
+            print(f"root: ${root} files: ${files}")
+            for file in files:
+                local_file_path = os.path.join(root, file)
+                blob_path = os.path.join(storage_path, os.path.relpath(local_file_path, SOURCEDIR))
+                blob = bucket.blob(blob_path)
+                blob.upload_from_filename(local_file_path)
+                print(f'{local_file_path} uplodated to {blob_path}')
