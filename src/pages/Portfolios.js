@@ -12,81 +12,87 @@ import { SelectProjectProvider , useSelectedProject } from "../components/select
 
 import "../scss/components/_project_card.scss"
 import PortfolioCard from "../components/portfolio-card";
+import { useProjectStructure } from "../providers/projectStructureProvider.js";
 
-const generateFilePaths = (dir, currentPath = "") => {
-  const paths = []
-
-  Object.keys(dir).forEach(key => {
-    const value = dir[key];
-
-    if( key === "files" ){
-      value.forEach(file => {
-        paths.push(`${currentPath}/${file}`)
-      })
-    } else {
-      const newCurrentPath = currentPath ? `${currentPath}/${key}` : key;
-      paths.push(...generateFilePaths(value, newCurrentPath));
-    }
-  });
-  return paths
-}
+// const generateFilePaths = (dir, currentPath = "") => {
+//   const paths = []
+//
+//   Object.keys(dir).forEach(key => {
+//     const value = dir[key];
+//     console.log(`Generating File Paths`)
+//
+//     if( key === "files" ){
+//       value.forEach(file => {
+//         paths.push(`${currentPath}/${file}`)
+//       })
+//     } else {
+//       const newCurrentPath = currentPath ? `${currentPath}/${key}` : key;
+//       paths.push(...generateFilePaths(value, newCurrentPath));
+//     }
+//   });
+//   return paths
+// }
+// const generateFilePaths = dir => {
+//   const paths = [];
+//   const stack = [{ dir, currentPath: ''}]
+//
+//   while( stack.length > 0 ){
+//     const { dir, currentPath } = stack.pop();
+//
+//     Object.keys(dir).forEach(key => {
+//       const value = dir[key];
+//
+//       if( key === "files" ){
+//         value.forEach(file => {
+//           paths.push(`${currentPath}/${file}`)
+//         })
+//       } else {
+//         const newCurrentPath = currentPath ? `${currentPath}/${key}` : key;
+//         stack.push({ dir: value, currentPath: newCurrentPath })
+//       }
+//     });
+//   }
+//   return paths;
+// };
 
 const FilesAndCodeBlock = () => {
-  const [projects, setProjects]                     = useState([]);
-  const [projectKey, setProjectKey]                 = useState(0);
-  const [projectDirectory, setProjectDirectory]     = useState([])
-  const [currentProjectName, setCurrentProjectName] = useState("")
-  const [filePaths, setFilePaths]                   = useState([])
-  const [currentFilePath, setCurrentFilePath]       = useState("");
+  // const [projects, setProjects]                     = useState([]);
+  // const [filePaths, setFilePaths]                   = useState([])
+  // const [currentFilePath, setCurrentFilePath]       = useState("");
 
-  const { selectedFile } = useSelectedFile();
-  const { selectedProject, setSelectedProject } = useSelectedProject(null);
-
-  useEffect(() => {
-    axios.get("/api/portfolio").then((resp) => {
-      setProjects(resp.data)
-      const firstProject = resp.data[0]
-      setProjectDirectory(firstProject.directory)
-      setCurrentProjectName(firstProject.projectName)
-      setFilePaths(generateFilePaths(firstProject.directory))
-    })
-  }, []);
-
-  useEffect(() => {
-    // setCurrentFilePath(filePaths.find((path) => {
-    //   let root = "../../public/projects/"
-    //   let fullpath =  root + path.endsWith(selectedFile)
-    //
-    //   console.log(`PATH === ${full}`)
-    //   return fullpath
-    // }));
-  }, [selectedFile])
+  const {
+    projectStructure,
+    projectId,
+    setProjectId,
+    projectKey,
+    setProjectKey,
+    selectedFile,
+  } = useProjectStructure();
 
 
   useEffect(() => {
-    if( selectedProject ){
-      const paths = generateFilePaths(selectedProject.directory)
-      setCurrentProjectName(selectedProject.projectName)
-      setProjectDirectory(selectedProject.directory)
-      setFilePaths(paths)
+    // console.log("SelectedProject")
+    if( projectId ){
       setProjectKey(projectKey + 1);
+
+    console.log(`Data: ${JSON.stringify(projectStructure, null, 2)}`)
     }
-  }, [selectedProject])
+  }, [projectId])
 
   const handleBackClick = () => {
-    setSelectedProject(null);
+    setProjectId(null);
   }
 
   return (
     <div className="container">
-      {selectedProject ? (
+      {projectId ? (
         <div
           className="project-card-expanded"
           style={{ width: "75vw", position: "relative" }}
         >
           <div className="project-button-container" onClick={handleBackClick}>
             <div className="project-button">
-              <span className="project-button-before">{selectedProject.projectName}</span>
+              <span className="project-button-before">{projectId}</span>
               <span className="project-button-after">Go Back</span>
             </div>
           </div>
@@ -98,21 +104,15 @@ const FilesAndCodeBlock = () => {
               border: "1px solid white"
             }}
           >
-            <DirectoryViewer
-              projectName={currentProjectName}
-              data={projectDirectory}
-              key={projectKey}
-            >
-            <PortfolioCodeBlock
-              filepath={currentFilePath}
-            />
+            <DirectoryViewer>
+              <PortfolioCodeBlock
+                filepath={selectedFile}
+              />
             </DirectoryViewer>
           </div>
         </div>
       ) : (
-          <PortfolioCard
-            projects={projects}
-          />
+          <PortfolioCard/>
       )}
     </div>
   );

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { useSelectedFile } from "./selectedFile.js";
 import "../scss/components/_directory.scss"
+import { useProjectStructure } from "../providers/projectStructureProvider.js";
 
 // Takes our Portfolio metadata file, and creates files paths based on the
 // generated Map structure of directory names and files arrays
-const DirectoryViewer = ({ children, projectName, data }) => {
+const DirectoryViewer = ({ children }) => {
   const [expanded, setExpanded] = useState(false)
+  const {
+    projectStructure,
+    projectId,
+  } = useProjectStructure();
 
+  console.log(JSON.stringify(projectStructure, null, 2))
   const handleExpanstion = () => setExpanded(!expanded);
 
   return (
@@ -23,14 +28,14 @@ const DirectoryViewer = ({ children, projectName, data }) => {
         position: "absolute",
       }}
     >
-      <Directory name={projectName} content={data} />
+      <Directory name={projectId} content={projectStructure} />
     </div>
     {children}
     </div>
   )
 };
 
-const Directory = ({ name, content }) => {
+const Directory = ({ name, content, currentPath = '' }) => {
   const [dirMargin, _setDirMargin] = useState(15);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,19 +43,28 @@ const Directory = ({ name, content }) => {
     setIsOpen(!isOpen);
   };
 
-  const renderContent = (content) => {
+  const renderContent = (content, currentPath) => {
     return Object.keys(content).map((key, index) => {
+      // const newPath = currentPath
+      //   ? `${currentPath}/${key}`
+      //   : key === "files" ? "" : key;
+      let newPath = currentPath;
+      if( key !== 'files') {
+        newPath = currentPath ? `${currentPath}/${key}` : key;
+      }
+
       if (key === "files") {
         return content[key].map((file, fileIndex) => (
           <File
             key={fileIndex}
             name={file}
+            path={`${newPath}/${file}`}
           />
         ));
       } else {
         return (
           <div key={index} className="directory-listing" style={{ marginLeft: `${dirMargin}px` }}>
-            <Directory name={key} content={content[key]} />
+            <Directory name={key} content={content[key]} currentPath={newPath} />
           </div>
         );
       }
@@ -66,17 +80,17 @@ const Directory = ({ name, content }) => {
           {name}
          </span>
       </div>
-      {isOpen && renderContent(content)}
+      {isOpen && renderContent(content, currentPath)}
     </div>
   )
 };
-const File = ({ name }) => {
-  const { setSelectedFile } = useSelectedFile();
+const File = ({ name, path }) => {
+  const { setAbsoluteFilePath } = useProjectStructure();
 
   return (
     <div
       className="fileName"
-      onClick={() => setSelectedFile(name)}
+      onClick={() => setAbsoluteFilePath(path)}
     >{name}</div>
   )
 }

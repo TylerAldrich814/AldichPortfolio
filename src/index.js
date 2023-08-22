@@ -9,6 +9,7 @@ import "./data";
 import * as serviceWorker from "./serviceWorker";
 // import { ImageProvider } from "./providers/ImageProvider";
 import { DataProvider } from "./providers/DataProvider";
+import { ProjectStructureProvider } from "./providers/projectStructureProvider";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -17,7 +18,9 @@ const root = createRoot(container);
 
 root.render(
   <DataProvider>
-    <App />
+    <ProjectStructureProvider>
+      <App />
+    </ProjectStructureProvider>
   </DataProvider>
 );
 

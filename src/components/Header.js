@@ -65,7 +65,7 @@ function Header() {
             </NavLink>
           </li>
         </ul>
-        <p className="mi-header-copyright">
+        <div className="mi-header-copyright">
           <b>
             <div
               className="header-icons"
@@ -96,7 +96,7 @@ function Header() {
             >Tyler Aldrich</a>
             </div>
           </b>
-        </p>
+        </div>
       </div>
     </nav>
   );

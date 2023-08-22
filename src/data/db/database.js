@@ -1,5 +1,5 @@
 import Mock from "../mock";
-import { getContactInfo, getExperienceInfo, getInformation, getSkillsInfo, getPortfolio, getSocialLinks} from "./firestore.js"
+import { getContactInfo, getExperienceInfo, getInformation, getSkillsInfo, getPortfolio, getSocialLinks, getProjectStructure, getPortfolioData} from "./firestore.js"
 
 const ImageUrls = {
   Images: {
@@ -383,7 +383,20 @@ Mock.onGet("/api/images").reply(_ => {
   return [200, response];
 })
 
+Mock.onGet("/api/projectsData").reply(async _ => {
+  const response = await getPortfolioData();
+  return [200, response];
+})
 
+// tyleraldrich.dev/projects?projectId={project-name}
+Mock.onGet(`/api/projects`).reply(async config => {
+  const url = new URL(config.url);
+  const projectId = url.searchParams.get('projectId');
+  console.log(`PROJECT`)
+
+  const response = getProjectStructure(projectId);
+  return [200, response]
+})
 
 // --------------------
 Mock.onGet("/api/services").reply(_ => {

@@ -11,7 +11,7 @@
 # testing
 /coverage
 /firebase_cred.js
-/aldrich-dev-portfolio-firebase-adminsdk-nxd05-df72616d13.json
+/credentials
 
 # production
 /build
