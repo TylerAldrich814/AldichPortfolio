@@ -25,32 +25,39 @@ export const useProjectStructure = () => React.useContext(ProjectContext)
 export const ProjectStructureProvider = ({ children }) => {
   const [projectStructure, setProjectStructure] = useState({}); // Directories.json
   const [projectsData, setProjectsData]         = useState({});
-  const [projectId, setProjectId]               = useState("");
+  const [projectId, setProjectId]               = useState(null);
   const [projectKey, setProjectKey]             = useState(0);
-  const [absoluteFilePath, setAbsoluteFilePath] = useState("");
+  const [absoluteFilePath, setAbsoluteFilePath] = useState(null);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
     axios.get("/api/projectsData")
       .then((response) => setProjectsData(response.data))
       .catch(e => console.error(`Error Occurred: ${e}`))
 
-    console.log(projectsData)
+    if( firstLoad ){
+      setFirstLoad(false);
+    }
   }, [])
 
   useEffect(() => {
-
-    if (projectId.length != 0) {
+    if (projectId !== null) {
       getProjectStructure(projectId).then(data => {
         setProjectStructure(data);
       }).catch(e => console.error(e));
-
+    }
+    if( !firstLoad && projectId === null ){
+      setProjectStructure({});
+      setAbsoluteFilePath(null);
     }
   }, [projectId])
 
   // absoluteFilePath => When a User clicks on a File in the DirectoryVierwer,
   // this value is updated, and this useEffect is triggered.
   useEffect(() => {
+    if( absoluteFilePath !== null ){
 
+    }
   }, [absoluteFilePath])
 
   return (

@@ -5,6 +5,7 @@
 # /.gitignore
 # dependencies
 /node_modules
+/portfolioBuildScripts
 /.pnp
 .pnp.js
 /package-lock.json

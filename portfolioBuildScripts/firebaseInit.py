@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, datetime, storage
+from firebase_admin import credentials, datetime, os, storage
 
 class FirebaseBucket():
     def __init__(self, cred, bucketPath):

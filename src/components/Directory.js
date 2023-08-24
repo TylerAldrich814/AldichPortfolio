@@ -1,30 +1,48 @@
-import React, { useState } from "react";
-import "../scss/components/_directory.scss"
+import React, { useState, useEffect } from "react";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
+import { useProjectFile } from "../hooks/load_file";
+import FileIcon from "../scss/components/_fileIcon.js";
 
 // Takes our Portfolio metadata file, and creates files paths based on the
 // generated Map structure of directory names and files arrays
 const DirectoryViewer = ({ children }) => {
   const [expanded, setExpanded] = useState(false)
+  const [dirHover, setDirHover] = useState(false);
   const {
+    absoluteFilePath,
     projectStructure,
     projectId,
   } = useProjectStructure();
 
-  console.log(JSON.stringify(projectStructure, null, 2))
-  const handleExpanstion = () => setExpanded(!expanded);
+  useEffect(() => {
+    if( absoluteFilePath !== null && expanded ){
+      setExpanded(false);
+    }
+  }, [absoluteFilePath])
 
   return (
     <div className="directory-viewer" >
-      <button
-        onClick={handleExpanstion}
+      <div
+        className="directory-viewer-btn"
+        onMouseEnter={() => setDirHover(true)}
+        onMouseLeave={() => setDirHover(false)}
+        onClick={() => setExpanded(!expanded)}
       >
-      { expanded ? "◀" : "▶" }
-      </button>
+      { expanded ? "Close" : "Open" }
+      </div>
     <div
-      className="directory"
+      className={dirHover ? "directory dirhover" : "directory"}
       style={{
-        width: expanded ? "300px" : "0px",
+        width:
+          dirHover && !expanded ? "80%" :
+          !dirHover && expanded ? "100%" :
+          dirHover && expanded ? "100%" : "0%",
+        // width: expanded ? "300px" : "0px",
+        width:
+          dirHover && !expanded ? "15px" :
+          !dirHover && expanded ? "300px" :
+          dirHover && expanded ? "285px" : "0px",
+
         position: "absolute",
       }}
     >
@@ -63,7 +81,11 @@ const Directory = ({ name, content, currentPath = '' }) => {
         ));
       } else {
         return (
-          <div key={index} className="directory-listing" style={{ marginLeft: `${dirMargin}px` }}>
+          <div
+            key={index}
+            className="directory-listing"
+            style={{
+            }}>
             <Directory name={key} content={content[key]} currentPath={newPath} />
           </div>
         );
@@ -87,11 +109,15 @@ const Directory = ({ name, content, currentPath = '' }) => {
 const File = ({ name, path }) => {
   const { setAbsoluteFilePath } = useProjectStructure();
 
+
   return (
-    <div
-      className="fileName"
-      onClick={() => setAbsoluteFilePath(path)}
-    >{name}</div>
+    <div className="fileName-container">
+      <FileIcon fileName={path} />
+      <div
+        className="fileName"
+        onClick={() => setAbsoluteFilePath(path)}
+      >{name}</div>
+    </div>
   )
 }
 

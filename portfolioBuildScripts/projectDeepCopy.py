@@ -13,7 +13,7 @@ def CopySourceToBucket(config, bucket):
         for file in files:
             _, ext = os.path.splitext(file)
             if ext not in config.Extensions:
-                # print(f" -> File '${file}' Ignrored.")
+                print(f" -> File '${file}' Ignrored.")
                 continue;
 
             local_file_path = os.path.join(root, file)

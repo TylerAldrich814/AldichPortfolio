@@ -10,56 +10,14 @@ import Spinner from "../components/Spinner";
 import { SelectedFileProvider , useSelectedFile } from "../components/selectedFile";
 import { SelectProjectProvider , useSelectedProject } from "../components/selectedFile";
 
-import "../scss/components/_project_card.scss"
 import PortfolioCard from "../components/portfolio-card";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
-
-// const generateFilePaths = (dir, currentPath = "") => {
-//   const paths = []
-//
-//   Object.keys(dir).forEach(key => {
-//     const value = dir[key];
-//     console.log(`Generating File Paths`)
-//
-//     if( key === "files" ){
-//       value.forEach(file => {
-//         paths.push(`${currentPath}/${file}`)
-//       })
-//     } else {
-//       const newCurrentPath = currentPath ? `${currentPath}/${key}` : key;
-//       paths.push(...generateFilePaths(value, newCurrentPath));
-//     }
-//   });
-//   return paths
-// }
-// const generateFilePaths = dir => {
-//   const paths = [];
-//   const stack = [{ dir, currentPath: ''}]
-//
-//   while( stack.length > 0 ){
-//     const { dir, currentPath } = stack.pop();
-//
-//     Object.keys(dir).forEach(key => {
-//       const value = dir[key];
-//
-//       if( key === "files" ){
-//         value.forEach(file => {
-//           paths.push(`${currentPath}/${file}`)
-//         })
-//       } else {
-//         const newCurrentPath = currentPath ? `${currentPath}/${key}` : key;
-//         stack.push({ dir: value, currentPath: newCurrentPath })
-//       }
-//     });
-//   }
-//   return paths;
-// };
+// import { ProjectFileProvider } from "../hooks/load_file.js";
+import "../scss/components/_project_card.scss"
+import "../scss/components/_directory.scss"
+import "../scss/components/_codeblock.scss";
 
 const FilesAndCodeBlock = () => {
-  // const [projects, setProjects]                     = useState([]);
-  // const [filePaths, setFilePaths]                   = useState([])
-  // const [currentFilePath, setCurrentFilePath]       = useState("");
-
   const {
     projectStructure,
     projectId,
@@ -71,11 +29,8 @@ const FilesAndCodeBlock = () => {
 
 
   useEffect(() => {
-    // console.log("SelectedProject")
     if( projectId ){
       setProjectKey(projectKey + 1);
-
-    console.log(`Data: ${JSON.stringify(projectStructure, null, 2)}`)
     }
   }, [projectId])
 
@@ -88,7 +43,6 @@ const FilesAndCodeBlock = () => {
       {projectId ? (
         <div
           className="project-card-expanded"
-          style={{ width: "75vw", position: "relative" }}
         >
           <div className="project-button-container" onClick={handleBackClick}>
             <div className="project-button">
@@ -96,19 +50,12 @@ const FilesAndCodeBlock = () => {
               <span className="project-button-after">Go Back</span>
             </div>
           </div>
-          <div className="code-block container"
-            style={{
-              display: 'flex',
-              width: "100vw",
-              height: "1000px",
-              border: "1px solid white"
-            }}
-          >
+          <div className="code-block container">
             <DirectoryViewer>
-              <PortfolioCodeBlock
-                filepath={selectedFile}
-              />
             </DirectoryViewer>
+            <PortfolioCodeBlock
+              filepath={selectedFile}
+            />
           </div>
         </div>
       ) : (
@@ -121,7 +68,7 @@ function Portfolios() {
   return (
     <Layout>
       <Helmet>
-        <title>Portfolios - Chester React Personal Portfolio Template</title>
+        <title>Portfolio :: Tyler Aldrich</title>
         <meta
           name="description"
           content="Chester React Personal Portfolio Template Portfolios Page"

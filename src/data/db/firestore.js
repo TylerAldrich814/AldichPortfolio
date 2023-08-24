@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import {collection, doc, getDoc, getDocs, getFirestore} from "firebase/firestore";
+import {doc, getDoc, getFirestore} from "firebase/firestore";
 import { firebaseConfig  } from '../../firebaseCredentials.js'
 
 const app = initializeApp(firebaseConfig);

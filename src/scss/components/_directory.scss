@@ -1,33 +1,68 @@
 @import '../_variables.scss';
 
+.clear {
+  // display: none;
+  background: red;
+}
+
 .directory-viewer {
   display: flex;
   position: relative;
+
 }
-.directory-viewer button {
+.directory-viewer-btn {
   position: absolute;
-  top: 12px;
-  left: 0px;
-  color: $light-color-theme;
-  background: lighten($color-bg-body, 5)
+  top: 4px;
+  left: -8px;
+  color: $color-body;
+  padding: 10px 15px;
+  font-size: 1.3rem;
+  border: 1px solid lighten($color-bg-body, 10);
+  background: lighten($color-bg-body, 5);
+  cursor: pointer;
+
+  &:hover {
+    background: lighten($color-bg-body, 10);
+    border: 1px solid lighten($color-bg-body, 5);
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 5px 10px;
+    top: 5px;
+  }
 }
 
+.dirhover {
+  border-right: 10px solid lighten($color-bg-body, 9);
+  width: 10px;
+}
 .directory {
   width: 250px;
-  height: 600px;
+  height: 85%;
   padding-top: 5px;
   padding-left: 5px;
   overflow: hidden;
-  border: 1px solid #ccc;
   background: lighten($color-bg-body, 5);
   backdrop-filter: blur(6px) ;
-  border-radius: 0 5px 5px 0;
-  transition: width 0.3s ease;
+  transition: opacity 0.2s linear;
   left: 0px;
   top: 100px;
   z-index: 1;
   overflow-y: auto;
   scrollbar-width: none;
+  border-top: 1px solid lighten($color-bg-body, 7);
+  border-right: 5px solid lighten($color-bg-body, 9);
+  border-bottom: 1px solid lighten($color-bg-body, 7);
+
+
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+
+  /* For Chrome, Safari, and newer versions of Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .code-block {
@@ -42,15 +77,57 @@
   font-weight: semi-bold;
 }
 .directory-btn {
+  transition: margin-right 0.3s ease-in;
+  font-weight: bold;
+  font-size: 1.25rem;
+
   &:hover {
     color: $light-color-theme;
-    transition: color 0.3s ease;
+    margin-right: 5px;
   }
 }
 .fileName {
-  &:hover {
-    font-weight: 600;
+  font-weight: 500;
+  transition: margin-left 0.3s ease-in-out;
 
-    transition: font-weight 0.3s ease;
+  &:hover {
+    margin-left: 12px;
   }
 }
+
+.directory-listing {
+  margin-left: 8px;
+
+}
+.directory-name {
+  font-weight: bold;
+
+}
+
+.fileName-container {
+  display: flex;
+  flex-direction: flex-row;
+  margin: 5px;
+
+  &:nth-child(2n) {
+    background: lighten($color-bg-body, 7);
+    transtion: background 0.3s ease;
+
+    &:hover {
+      background: lighten($color-bg-body, 8);
+    }
+  }
+  &:nth-child(2n+1){
+    background: lighten($color-bg-body, 9);
+    transtion: background 0.3s ease;
+
+    &:hover {
+      background: lighten($color-bg-body, 8);
+    }
+  }
+
+  .fileName {
+    line-height: 30px;
+  }
+}
+
