@@ -19,7 +19,6 @@ import "../scss/components/_codeblock.scss";
 
 const FilesAndCodeBlock = () => {
   const {
-    projectStructure,
     projectId,
     setProjectId,
     projectKey,
@@ -54,6 +53,7 @@ const FilesAndCodeBlock = () => {
             <DirectoryViewer>
             </DirectoryViewer>
             <PortfolioCodeBlock
+
               filepath={selectedFile}
             />
           </div>

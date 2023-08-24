@@ -392,10 +392,18 @@ Mock.onGet("/api/projectsData").reply(async _ => {
 Mock.onGet(`/api/projects`).reply(async config => {
   const url = new URL(config.url);
   const projectId = url.searchParams.get('projectId');
-  console.log(`PROJECT`)
 
   const response = getProjectStructure(projectId);
   return [200, response]
+})
+
+Mock.onGet('/api/projectFile').reply(async config => {
+  const url = new URL(config.url);
+  const projectId = url.searchParams.get('projectId');
+  const filePath = url.searchParams.get('filePath');
+
+  const response = getProjectFileContents(projectId, filePath);
+  return [200, response];
 })
 
 // --------------------

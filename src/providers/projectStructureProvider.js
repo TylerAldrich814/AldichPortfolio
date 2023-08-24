@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import { getImageUrl } from '../data/db/fireStorage';
-import { getProjectStructure } from '../data/db/firestore';
+import { getProjectFileContents, getProjectStructure } from '../data/db/firestore';
 
 const ProjectContext = React.createContext(null);
 
@@ -28,7 +28,10 @@ export const ProjectStructureProvider = ({ children }) => {
   const [projectId, setProjectId]               = useState(null);
   const [projectKey, setProjectKey]             = useState(0);
   const [absoluteFilePath, setAbsoluteFilePath] = useState(null);
+  const [selectedFileContents, setSelectedFileContents] = useState(null);
   const [firstLoad, setFirstLoad] = useState(true);
+
+  const cachedFileContents = {};
 
   useEffect(() => {
     axios.get("/api/projectsData")
@@ -49,6 +52,7 @@ export const ProjectStructureProvider = ({ children }) => {
     if( !firstLoad && projectId === null ){
       setProjectStructure({});
       setAbsoluteFilePath(null);
+      setSelectedFileContents(null);
     }
   }, [projectId])
 
@@ -56,7 +60,24 @@ export const ProjectStructureProvider = ({ children }) => {
   // this value is updated, and this useEffect is triggered.
   useEffect(() => {
     if( absoluteFilePath !== null ){
-
+      const fileKey =`${projectId}/${absoluteFilePath}`;
+      // if( cachedFileContents.contains(fileKey)){
+      if( fileKey in cachedFileContents ){
+        setSelectedFileContents(cachedFileContents[`${projectId}/${absoluteFilePath}`])
+      } else {
+        getProjectFileContents(projectId, absoluteFilePath)
+          .then(data => {
+            cachedFileContents[fileKey] = data;
+            setSelectedFileContents(data);
+            console.log(`Type == ${typeof(cachedFileContents[fileKey])}`)
+            // console.log(`Cached Contents: ${cachedFileContents[fileKey]}`)
+          })
+          .catch(_ => {
+            setSelectedFileContents("ERROR");
+            return;
+          })
+        // setSelectedFileContents(cachedFileContents[`${projectId}/${absoluteFilePath}`])
+      }
     }
   }, [absoluteFilePath])
 
@@ -70,6 +91,7 @@ export const ProjectStructureProvider = ({ children }) => {
       setProjectId,
       setProjectKey,
       setAbsoluteFilePath,
+      selectedFileContents,
     }}>
       {children}
     </ProjectContext.Provider>

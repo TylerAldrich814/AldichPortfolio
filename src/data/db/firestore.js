@@ -58,40 +58,22 @@ export const getProjectStructure = async (project) => {
   }catch( e ){
     console.error(`Error occurred while fetching JSON URL -> ${e}`)
   }
-
-  // getDownloadURL(gsReference)
-  //   .then((url) => {
-      // const xhr = new XMLHttpRequest();
-      // xhr.responseType = 'blob';
-      // xhr.onLoad = (event) => {
-      //   const blob = xhr.response;
-      // };
-      // xhr.open('GET', url);
-      // xhr.send();
-      // console.log(xhr.response)
-
-    // })
-    // .catch(e => {
-    //   console.error(`Error occured while Fetching Json URL -> ${e}`)
-    // })
-
-  // const rootURL = 'https://storage.googleapis.com/aldrich-dev-portfolio.appspot.com/portfolio/'
-  // const jsonUrl = rootURL + `${project}/structure/directories.json`
-  //
-  // fetch(jsonUrl)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     return data;
-  //   })
-  //   .catch(e => {
-  //     console.error(`An Error occured while Fetching json: ${e}`)
-  //   })
 }
 
-// project == Firestore Document name
-export const xgetProjectStructure = async (project) => {
-  console.log(`PROJECT=${project}`)
-  const projectRef = doc(db, "projectStructures", project);
-  const projectDoc = await getDoc(projectRef);
-  return projectDoc.exists() ? projectDoc.data() : null;
-};
+// filePath will be the relative filepath within your project. Which if you
+// used my Build scripts, should of been deep copied from your projects directory
+// onto Firebase Storage using the same File Structure.
+export const getProjectFileContents = async (project, filePath) => {
+  const storage = getStorage(app);
+  const gsReference = ref(storage, `gs://aldrich-dev-portfolio.appspot.com/portfolio/${project}/${filePath}`)
+
+  try {
+    const url = await getDownloadURL(gsReference);
+    const response = await fetch(url);
+    const data = await response.text();
+    return data;
+  } catch( e ){
+    console.error(`Error occurred while fetching JSON URL -> ${e}`)
+    return null
+  }
+}
