@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CodeBlock, dracula } from "react-code-blocks";
 // import { useFileContents } from "../hooks/load_file.js";
@@ -14,39 +13,31 @@ const PortfolioCodeBlock = () => {
 
   const [language, setLanguage] = useState("");
 
-  // useEffect(() => {
-  //   // When a File is selected, We'll trigger a Firebase fetch function via Axios
-  //   if( absoluteFilePath !== null ){
-  //     setLanguage(absoluteFilePath)
-  //   }
-  // }, [absoluteFilePath])
-
   useEffect(() => {
     if( selectedFileContents !== null) {
       setLanguage(matchLanguage(absoluteFilePath))
       setCode(selectedFileContents) ;
       setIsLoading(false);
     } else if( selectedFileContents === "ERROR" ){
-
+      <div className="block-container">
+        <p>An Unknown error occurred while trying to load my code.. If reloading doesn't fix the issue, and this keeps happening. Then please shoot me a message.</p>
+      </div>
     }
   }, [selectedFileContents])
 
   if( selectedFileContents === null ){
-    console.log("Files not selected")
     return (
       <div className="block-container">
-        <p>Use the Directory to the left to select a file to view.</p>
       </div>
     )
   }
-
 
   return (
     <div className="Block-container">
       {isLoading ? (
         <p> Loading...</p>
       ) : (
-        <div className="block">
+        <div>
           <div className="block-title">
             <h4>{absoluteFilePath}</h4>
           </div>
@@ -84,6 +75,7 @@ function matchLanguage(filepath) {
     ".rs": 'rust',
     ".sql": 'sql',
     ".swift": 'swift',
+    ".yaml": "yaml",
     ".ts": 'typescript',
   };
   var parts = filepath.split(".");
@@ -96,7 +88,6 @@ function matchLanguage(filepath) {
   if (ext === null) {
     return "ERROR"
   }
-  console.log(`EXTENTION == ${ext}`)
   return ext
 }
 

@@ -19,6 +19,16 @@ function About() {
   const [toggler, setToggler]         = useState(false);
   const information = useInformation();
   const imageUrls = useImages();
+  const { aboutImageLg } = useImages();
+  const [largeImageUrl, setLargeImageUrl] = useState("");
+
+  useEffect(() => {
+    if( imageUrls !== undefined){
+      console.log(`LARGEIMAGEURL: ${useImages.aboutImageLg}`)
+    }
+    // setLargeImageUrl(useImages.aboutImageLg)
+
+  }, [imageUrls])
 
   const sliderSettings = {
     dots: false,
@@ -78,7 +88,7 @@ function About() {
                   </span>
                   <FsLightbox
                     toggler={toggler}
-                    sources={[useImages.aboutImageLg]}
+                    sources={[aboutImageLg]}
                   />
                 </div>
               </div>

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-// import { getImageUrl } from '../data/db/fireStorage';
 import { getProjectFileContents, getProjectStructure } from '../data/db/firestore';
 
+
 const ProjectContext = React.createContext(null);
-
 export const useProjectStructure = () => React.useContext(ProjectContext)
-
 //            ProjectStructureProvider => The Main Context
 //            Block which keeps track of Multiple items.
 //  -> projectStructure = A JSON object, which I generate Outside of this application
@@ -22,16 +20,22 @@ export const useProjectStructure = () => React.useContext(ProjectContext)
 //                       from using 'projectStructure', it also keeps track of any printed
 //                       files abosolute File path. When a User selects that file, then the
 //                       path is stored within 'absoluteFilePath'
+// -> firstLoad = Self explanatory.
+// -> selectedFileContents = The file contents of a selected file to be displayed
+// -> cachedFiles = For locally storing files that have already been loaded from DB
+// -> tabbedFiles = piggybacks off of cachedFiles. For displaying Past files that were
+//                  previously opened at the bottom of our CodeBlock component.
 export const ProjectStructureProvider = ({ children }) => {
   const [projectStructure, setProjectStructure] = useState({}); // Directories.json
   const [projectsData, setProjectsData]         = useState({});
   const [projectId, setProjectId]               = useState(null);
   const [projectKey, setProjectKey]             = useState(0);
   const [absoluteFilePath, setAbsoluteFilePath] = useState(null);
+  const [firstLoad, setFirstLoad]               = useState(true);
   const [selectedFileContents, setSelectedFileContents] = useState(null);
-  const [firstLoad, setFirstLoad] = useState(true);
 
-  const cachedFileContents = {};
+  const [cachedFiles, setCachedFiles] = useState({});
+  const [tabbedFiles, setTabbedFiles] = useState([]);
 
   useEffect(() => {
     axios.get("/api/projectsData")
@@ -60,26 +64,32 @@ export const ProjectStructureProvider = ({ children }) => {
   // this value is updated, and this useEffect is triggered.
   useEffect(() => {
     if( absoluteFilePath !== null ){
-      const fileKey =`${projectId}/${absoluteFilePath}`;
-      // if( cachedFileContents.contains(fileKey)){
-      if( fileKey in cachedFileContents ){
-        setSelectedFileContents(cachedFileContents[`${projectId}/${absoluteFilePath}`])
-      } else {
-        getProjectFileContents(projectId, absoluteFilePath)
-          .then(data => {
-            cachedFileContents[fileKey] = data;
-            setSelectedFileContents(data);
-            console.log(`Type == ${typeof(cachedFileContents[fileKey])}`)
-            // console.log(`Cached Contents: ${cachedFileContents[fileKey]}`)
-          })
-          .catch(_ => {
-            setSelectedFileContents("ERROR");
-            return;
-          })
-        // setSelectedFileContents(cachedFileContents[`${projectId}/${absoluteFilePath}`])
-      }
+      handleFileContents();
     }
   }, [absoluteFilePath])
+
+  const handleFileContents = () => {
+    Object.keys(cachedFiles).forEach(key => {
+      if( key === absoluteFilePath ){
+        console.log(`KEY FOUND: ${key} === ${absoluteFilePath}`)
+        setSelectedFileContents(key)
+        return
+      }
+    })
+    getProjectFileContents(projectId, absoluteFilePath)
+      .then((data) => {
+        setSelectedFileContents(data);
+        return data;
+      })
+      .then((data) => {
+        setCachedFiles(prevState => ({ ...prevState, [absoluteFilePath]: data }));
+        setTabbedFiles(prevTabbedFiles => [...prevTabbedFiles, absoluteFilePath]);
+      })
+      .catch(error => {
+        console.log('Error:', error);
+        setSelectedFileContents("ERROR");
+      });
+  }
 
   return (
     <ProjectContext.Provider value={{

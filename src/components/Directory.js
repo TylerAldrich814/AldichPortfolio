@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
-import { useProjectFile } from "../hooks/load_file";
-import FileIcon from "../scss/components/_fileIcon.js";
+import FileIcon from "./fileIcon.js";
 
 // Takes our Portfolio metadata file, and creates files paths based on the
 // generated Map structure of directory names and files arrays
 const DirectoryViewer = ({ children }) => {
   const [expanded, setExpanded] = useState(false)
   const [dirHover, setDirHover] = useState(false);
+  const [hoverBackBtn, setHoverBackBtn] = useState(false);
   const {
     absoluteFilePath,
     projectStructure,
     projectId,
+    setProjectId,
   } = useProjectStructure();
+
+  useEffect(() => {
+    const delayedExpansion = setTimeout(() => {
+      setExpanded(true);
+    }, 750);
+
+    return () => {
+      clearTimeout(delayedExpansion);
+    };
+  }, [])
 
   useEffect(() => {
     if( absoluteFilePath !== null && expanded ){
@@ -22,26 +33,37 @@ const DirectoryViewer = ({ children }) => {
 
   return (
     <div className="directory-viewer" >
-      <div
-        className="directory-viewer-btn"
-        onMouseEnter={() => setDirHover(true)}
-        onMouseLeave={() => setDirHover(false)}
-        onClick={() => setExpanded(!expanded)}
-      >
-      { expanded ? "Close" : "Open" }
+      <div className="directory-viewer-btn-container">
+        <div
+          className="directory-viewer-btn"
+          onMouseEnter={() => setDirHover(true)}
+          onMouseLeave={() => setDirHover(false)}
+          onClick={() => setProjectId(null)}
+        >
+        <h5>Back</h5>
+        </div>
+        <div
+          className="directory-viewer-btn"
+          onMouseEnter={() => setDirHover(true)}
+          onMouseLeave={() => setDirHover(false)}
+          onClick={() => setExpanded(!expanded)}
+        >
+        <h5>{ expanded ? "Close" : "Open" }</h5>
+        </div>
       </div>
     <div
       className={dirHover ? "directory dirhover" : "directory"}
       style={{
-        width:
-          dirHover && !expanded ? "80%" :
-          !dirHover && expanded ? "100%" :
-          dirHover && expanded ? "100%" : "0%",
-        // width: expanded ? "300px" : "0px",
+        transition: "all 0.2s linear",
         width:
           dirHover && !expanded ? "15px" :
           !dirHover && expanded ? "300px" :
           dirHover && expanded ? "285px" : "0px",
+        opacity:
+          dirHover && !expanded ? "80%" :
+          !dirHover && expanded ? "100%" :
+          dirHover && expanded ? "80%" : "0%",
+
 
         position: "absolute",
       }}

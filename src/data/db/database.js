@@ -293,23 +293,6 @@ const database = {
       },
     },
   ],
-  // directory: [
-    //   {
-      //     id: 1,
-      //     filename: "userSignup.go",
-      //     path: "/projects/services/userManagement/userSignup.go",
-      //   },
-    //   {
-      //     id: 2,
-      //     filename: "userDeletion.go",
-      //     path: "/projects/services/userManagement/userDeletion.go",
-      //   },
-    //   {
-      //     id: 3,
-      //     filename: "userGet.go",
-      //     path: "/projects/services/userManagement/userGet.go",
-      //   },
-    // ]
   experience: {
     workingExperience: [
       {
@@ -405,26 +388,4 @@ Mock.onGet('/api/projectFile').reply(async config => {
   const response = getProjectFileContents(projectId, filePath);
   return [200, response];
 })
-
-// --------------------
-Mock.onGet("/api/services").reply(_ => {
-    const response = database.services;
-    return [200, response];
-  });
-
-  Mock.onGet("/api/reviews").reply(_ => {
-      const response = database.reviews;
-      return [200, response];
-    });
-
-Mock.onGet("/api/portfolio").reply(_ => {
-  const response = database.portfolio;
-  return [200, response];
-});
-
-
-Mock.onGet("/api/blog").reply(_ => {
-  const response = database.blogs;
-  return [200, response];
-});
 

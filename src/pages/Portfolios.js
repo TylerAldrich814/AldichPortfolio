@@ -33,27 +33,13 @@ const FilesAndCodeBlock = () => {
     }
   }, [projectId])
 
-  const handleBackClick = () => {
-    setProjectId(null);
-  }
-
   return (
     <div className="container">
       {projectId ? (
-        <div
-          className="project-card-expanded"
-        >
-          <div className="project-button-container" onClick={handleBackClick}>
-            <div className="project-button">
-              <span className="project-button-before">{projectId}</span>
-              <span className="project-button-after">Go Back</span>
-            </div>
-          </div>
+        <div className="project-card-expanded">
           <div className="code-block container">
-            <DirectoryViewer>
-            </DirectoryViewer>
+            <DirectoryViewer />
             <PortfolioCodeBlock
-
               filepath={selectedFile}
             />
           </div>
