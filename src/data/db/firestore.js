@@ -77,3 +77,15 @@ export const getProjectFileContents = async (project, filePath) => {
     return null
   }
 }
+
+export const getResumeURL = async () => {
+  const storage = getStorage(app);
+  const gsReference = ref(storage, `gs://aldrich-dev-portfolio.appspot.com/resume/Tyler_Aldrich_Resume2023.pdf`)
+
+  try {
+    const url = await getDownloadURL(gsReference);
+    return url;
+  }catch( e ){
+    console.error(`Error occurred while fetching Resume`)
+  }
+};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { CodeBlock, dracula } from "react-code-blocks";
-// import { useFileContents } from "../hooks/load_file.js";
+import { CodeBlock, dracula, obsidian } from "react-code-blocks";
+import { useCodeBlock } from "../providers/CodeBlockInteractions.js";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
 
 const PortfolioCodeBlock = () => {
@@ -12,6 +12,10 @@ const PortfolioCodeBlock = () => {
   } = useProjectStructure();
 
   const [language, setLanguage] = useState("");
+
+  const {
+    setDirExpanded,
+  } = useCodeBlock();
 
   useEffect(() => {
     if( selectedFileContents !== null) {
@@ -33,7 +37,7 @@ const PortfolioCodeBlock = () => {
   }
 
   return (
-    <div className="Block-container">
+    <div>
       {isLoading ? (
         <p> Loading...</p>
       ) : (
@@ -41,12 +45,14 @@ const PortfolioCodeBlock = () => {
           <div className="block-title">
             <h4>{absoluteFilePath}</h4>
           </div>
-          <div className="code-container">
+          <div className="code-container"
+            onClick={() => setDirExpanded(false)}
+          >
             <CodeBlock
               language={language}
               text={code}
               showLineNumbers={true}
-              theme={dracula}
+              theme={obsidian}
               wrapLines={true}
               codeBlock
             />

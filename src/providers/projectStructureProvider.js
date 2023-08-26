@@ -57,6 +57,7 @@ export const ProjectStructureProvider = ({ children }) => {
       setProjectStructure({});
       setAbsoluteFilePath(null);
       setSelectedFileContents(null);
+      setTabbedFiles([])
     }
   }, [projectId])
 
@@ -65,17 +66,27 @@ export const ProjectStructureProvider = ({ children }) => {
   useEffect(() => {
     if( absoluteFilePath !== null ){
       handleFileContents();
+    }else if( !firstLoad && absoluteFilePath === null ){
+      setSelectedFileContents(null);
     }
   }, [absoluteFilePath])
 
   const handleFileContents = () => {
+    let keyFound = false;
     Object.keys(cachedFiles).forEach(key => {
       if( key === absoluteFilePath ){
-        console.log(`KEY FOUND: ${key} === ${absoluteFilePath}`)
-        setSelectedFileContents(key)
+        setSelectedFileContents(cachedFiles[key])
+        keyFound = true;
+
+        // Check if files in tabbedFiles. if not, add it.
+        if( tabbedFiles.indexOf(key) === -1 ){
+          setTabbedFiles(prevTabbedFiles => [...prevTabbedFiles, key]);
+        }
         return
       }
     })
+    if( keyFound ) return
+
     getProjectFileContents(projectId, absoluteFilePath)
       .then((data) => {
         setSelectedFileContents(data);
@@ -102,6 +113,7 @@ export const ProjectStructureProvider = ({ children }) => {
       setProjectKey,
       setAbsoluteFilePath,
       selectedFileContents,
+      tabbedFiles, setTabbedFiles,
     }}>
       {children}
     </ProjectContext.Provider>

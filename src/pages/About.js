@@ -7,6 +7,7 @@ import ProgressiveImage from "react-progressive-graceful-image";
 import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
 import Spinner from "../components/Spinner";
+import { getResumeURL } from "../data/db/fireStorage";
 
 import { useInformation, useImages } from "../providers/DataProvider.js"
 
@@ -21,11 +22,15 @@ function About() {
   const imageUrls = useImages();
   const { aboutImageLg } = useImages();
   const [largeImageUrl, setLargeImageUrl] = useState("");
+  const [resumeUrl, setResumeUrl] = useState("");
 
   useEffect(() => {
     if( imageUrls !== undefined){
       console.log(`LARGEIMAGEURL: ${useImages.aboutImageLg}`)
     }
+    getResumeURL()
+      .then(url => setResumeUrl(url))
+      .catch(e => console.error(e))
     // setLargeImageUrl(useImages.aboutImageLg)
 
   }, [imageUrls])
@@ -142,7 +147,7 @@ function About() {
                       </li>
                     )}
                   </ul>
-                  <a href={information.cvfile} className="mi-button">
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="mi-button">
                     Download CV
                   </a>
                 </div>

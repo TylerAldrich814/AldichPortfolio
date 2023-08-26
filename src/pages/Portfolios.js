@@ -16,11 +16,12 @@ import { useProjectStructure } from "../providers/projectStructureProvider.js";
 import "../scss/components/_project_card.scss"
 import "../scss/components/_directory.scss"
 import "../scss/components/_codeblock.scss";
+import TabbedFiles from "../components/CodeBlockTabs.js";
+import { CodeBlockProvider } from "../providers/CodeBlockInteractions.js";
 
 const FilesAndCodeBlock = () => {
   const {
     projectId,
-    setProjectId,
     projectKey,
     setProjectKey,
     selectedFile,
@@ -35,18 +36,22 @@ const FilesAndCodeBlock = () => {
 
   return (
     <div className="container">
-      {projectId ? (
-        <div className="project-card-expanded">
-          <div className="code-block container">
+      <CodeBlockProvider>
+        <div className="main-block">
+        {projectId ? (
+          <div className="code-block">
             <DirectoryViewer />
             <PortfolioCodeBlock
               filepath={selectedFile}
             />
+            <div className="codeblock-padding" />
           </div>
+        ) : (
+            <PortfolioCard/>
+        )}
         </div>
-      ) : (
-          <PortfolioCard/>
-      )}
+        {projectId ? (<TabbedFiles />): <></> }
+      </CodeBlockProvider>
     </div>
   );
 }

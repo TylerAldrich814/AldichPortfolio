@@ -14,10 +14,9 @@
   }
 }
 .project-card-expanded{
-  background: red ;
   width: 0;
-
 }
+
 
 .project-card {
   display: flex;
@@ -101,7 +100,7 @@
   border: 1px solid $color-body
 
   &:hover {
-    background-color: lighten($color-bg-body, 10);
+    background-color: lighten($color-bg-body, 1);
     transition: $transition;
   }
 }
@@ -109,7 +108,8 @@
   background-color: lighten($color-bg-body, 8);
   color: $color-body;
   cursor: pointer;
-  border: none;
+  border: 1px solid lighten($color-border, 5);
+  border-radius: 4px 4px 0 0;
 
   &:hover {
     background-color: lighten($color-bg-body, 10);

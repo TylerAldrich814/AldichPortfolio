@@ -1,16 +1,16 @@
 @import '../_variables.scss';
 
-.clear {
-  // display: none;
-  background: red;
-}
 
 .directory-viewer {
   display: flex;
   position: absolute;
-  height: 70vh;
+  height: 650px;
+  margin-left: 12px;
+  width: 0;
   z-index: 3;
+  background: red;
 }
+
 
 .directory-viewer-btn-container {
   display: flex;
@@ -23,11 +23,15 @@
 .directory-viewer-btn {
   z-index: 3;
   color: $color-body;
-  padding: 8px 13px;
+  padding: 10px 10px;
   border: 1px solid lighten($color-bg-body, 10);
-  border-radius: 5px;
+  border-radius: 4px 4px 0 0;
   background: lighten($color-bg-body, 5);
   cursor: pointer;
+
+  h5 {
+    font-size: 1rem;
+  }
 
   &:hover {
     background: lighten($color-bg-body, 10);
@@ -93,16 +97,19 @@
   }
 }
 
-.code-block {
-  flex-grow: 1;
-}
-.fileName,.directory-btn {
+.fileName,.directory-btn,.directory-name {
   cursor: pointer;
   margin-left: 8px;
 }
 .fileName, .directory-btn, .directory-name {
   color: $color-body;
   font-weight: semi-bold;
+  font-size: 1rem;
+
+  &:hover {
+    color: $color-heading;
+    margin-right: 5px;
+  }
 }
 .directory-btn {
   transition: margin-right 0.3s ease-in;
