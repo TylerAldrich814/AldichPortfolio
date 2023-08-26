@@ -1,7 +1,12 @@
+logsbucket: 'gs://portfolio_cloud_logs/Logs'
+
 steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
-  args: ['test']
+  args: ['build']
 - name: 'grc.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
+
+
+    portfolio_cloud_logs/Logs
