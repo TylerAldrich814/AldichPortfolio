@@ -1,4 +1,4 @@
-logsBucket: 'gs://TylerAldrichDev-Portfolio/portfolio_cloud_logs/Logs'
+logsBucket: 'gs://TylerAldrichDev-Portfolio/portfolio_cloud_logs'
 steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
