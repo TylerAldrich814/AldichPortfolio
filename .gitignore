@@ -4,21 +4,21 @@
 /.git
 # /.gitignore
 # dependencies
-/node_modules
-/portfolioBuildScripts
+/Backend
+/TylerAldrich.dev/node_modules
+/TylerAldrich.dev/portfolioBuildScripts
 /.pnp
 .pnp.js
 /package-lock.json
 # testing
-/coverage
-/firebase_cred.js
-/credentials
+/TylerAldrich.dev/coverage
+/TylerAldrich.dev/firebase_cred.js
+/TylerAldrich.dev/credentials
 
 # production
-/build
-/public/*
-/src/blog
-/src/firebaseCredentials.js
+/TylerAldrich.dev/build
+/TylerAldrich.dev/public/*
+/TylerAldrich.dev/src/blog
 
 # misc
 .DS_Store
