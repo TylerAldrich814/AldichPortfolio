@@ -1,0 +1,10 @@
+# Cellphone Size:
+  * Show Code
+    - Change Filename size( too large )
+    - Weird shake when file is long and requires scrolling(?)
+      not sure If I'll be able to fix this since react-code-blocks
+      is a 3rd party library...
+    - Directory is too long( shoots past the bottom of the code-continer)
+
+
+# Need to re-setup 'Get in touch field' with Fiebase Functions.

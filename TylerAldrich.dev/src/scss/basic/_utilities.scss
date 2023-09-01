@@ -27,6 +27,15 @@
   }
 }
 
+input::placeholder {
+  // color: $color-border;
+  display: relative;
+  color: $color-heading;
+  opacity: 0.3;
+  // text-align: center;
+  padding-left: 8px;
+}
+
 .color-theme {
   color: $color-theme;
 }

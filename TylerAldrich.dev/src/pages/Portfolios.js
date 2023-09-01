@@ -1,18 +1,15 @@
-import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import PortfolioCodeBlock from "../components/CodeBlock.js";
-// import Smalltitle from "../components/Smalltitle";
 import { Helmet } from "react-helmet";
 import DirectoryViewer from "../components/Directory";
-import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
 import Spinner from "../components/Spinner";
-import { SelectedFileProvider , useSelectedFile } from "../components/selectedFile";
-import { SelectProjectProvider , useSelectedProject } from "../components/selectedFile";
+import Layout from "../components/Layout.js";
+import { SelectedFileProvider } from "../components/selectedFile";
+import { SelectProjectProvider } from "../components/selectedFile";
 
 import PortfolioCards from "../components/PortfolioCards.js";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
-// import { ProjectFileProvider } from "../hooks/load_file.js";
 import "../scss/components/_project_card.scss"
 import "../scss/components/_directory.scss"
 import "../scss/components/_codeblock.scss";
@@ -28,7 +25,6 @@ const FilesAndCodeBlock = () => {
     selectedFile,
   } = useProjectStructure();
 
-
   useEffect(() => {
     if( projectId ){
       setProjectKey(projectKey + 1);
@@ -36,10 +32,10 @@ const FilesAndCodeBlock = () => {
   }, [projectId])
 
   return (
-      <div className="container">
+    <div className="container">
+      {projectId ? (
         <div className="main-block">
-        <CodeBlockHeader />
-        {projectId ? (
+          <CodeBlockHeader />
           <div className="code-block">
             <DirectoryViewer />
             <PortfolioCodeBlock
@@ -47,15 +43,19 @@ const FilesAndCodeBlock = () => {
             />
             <div className="codeblock-padding" />
           </div>
-        ) : (
-            <PortfolioCards/>
-        )}
-        </div>
         {projectId ? (<TabbedFiles />): <></> }
-      </div>
+        </div>
+        ) : (
+          <PortfolioCards/>
+        )}
+    </div>
   );
 }
 function Portfolios() {
+  const {
+    projectId,
+  } = useProjectStructure();
+
   return (
     <Layout>
       <Helmet>
@@ -68,7 +68,7 @@ function Portfolios() {
       <Suspense fallback={<Spinner />}>
         <div className="mi-about mi-section mi-padding-top mi-padding-bottom">
           <div className="container">
-            <Sectiontitle title="Portfolio" />
+            <Sectiontitle title={projectId !== null ? projectId : "Portfolio"} />
             <SelectProjectProvider >
               <CodeBlockProvider>
                 <SelectedFileProvider>

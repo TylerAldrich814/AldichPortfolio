@@ -48,7 +48,7 @@ export const getPortfolioData = async () => {
 
 export const getProjectStructure = async (project) => {
   const storage = getStorage(app);
-  const gsReference = ref(storage, `gs://aldrich-dev-portfolio.appspot.com/portfolio/${project}/structure/directories.json`)
+  const gsReference = ref(storage, `gs://tyleraldrichdev.appspot.com/portfolio/${project}/structure/directories.json`)
 
   try {
     const url = await getDownloadURL(gsReference);
@@ -65,7 +65,7 @@ export const getProjectStructure = async (project) => {
 // onto Firebase Storage using the same File Structure.
 export const getProjectFileContents = async (project, filePath) => {
   const storage = getStorage(app);
-  const gsReference = ref(storage, `gs://aldrich-dev-portfolio.appspot.com/portfolio/${project}/${filePath}`)
+  const gsReference = ref(storage, `gs://tyleraldrichdev.appspot.com/portfolio/${project}/${filePath}`)
 
   try {
     const url = await getDownloadURL(gsReference);

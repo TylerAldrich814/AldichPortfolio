@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet";
 import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import Layout from "../components/Layout";
 import Spinner from "../components/Spinner";
+import Layout from "../components/Layout.js"
 
 function Notfound() {
   return (

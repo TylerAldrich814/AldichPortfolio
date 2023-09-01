@@ -1,12 +1,21 @@
 import React, { Suspense } from "react";
 import { Helmet } from "react-helmet";
-import Layout from "../components/Layout";
 import Socialicons from "../components/Socialicons";
 import Spinner from "../components/Spinner";
-import { useInformation } from "../providers/DataProvider";
+import Layout from "../components/Layout.js"
+import { useFirebaseData } from "../providers/FirebaseDataProvider";
 
 function Home({ lightMode }) {
-  const information = useInformation();
+  // const information = useInformation();
+  const { isLoading, information } = useFirebaseData();
+
+  if (isLoading) {
+    return <div style = {{
+
+    }
+    }
+      >Loading...</div>
+  }
 
   return (
     <Layout>

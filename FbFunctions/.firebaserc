@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "aldrich-dev-portfolio",
+    "development": "tyleraldrichdev"
+  },
+  "targets": {},
+  "etags": {}
+}

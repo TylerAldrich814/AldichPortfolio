@@ -2,41 +2,33 @@ import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import TrackVisibility from "react-on-screen";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout.js"
 import Progress from "../components/Progress";
 import Resume from "../components/Resume";
 import Sectiontitle from "../components/Sectiontitle";
 import Smalltitle from "../components/Smalltitle";
 import Spinner from "../components/Spinner";
-import { useSkills, useExperience } from "../providers/DataProvider";
+import { useFirebaseData } from "../providers/FirebaseDataProvider.js";
+// import { useSkills, useExperience } from "../providers/DataProvider";
 
 function Resumes() {
-  const skills = useSkills();
-  const experience = useExperience();
-  const [workingExperience, setWorkingExperience] = useState([]);
-  // const [skills, setSkills] = useState([]);
-  // const [workingExperience, setWorkingExperience] = useState([]);
-  // const [educationExperience, setEducationExperience] = useState([]);
+  const {
+    skills,
+    experience,
+  } = useFirebaseData();
+  const [workingExperience, setWorkingExperience] = useState({});
 
   useEffect(() => {
     setWorkingExperience(experience.workingExperience);
-
-    // axios.get("/api/skills").then((response) => {
-    //   setSkills(response.data);
-    // });
-    // axios.get("/api/experience").then((response) => {
-    //   setWorkingExperience(response.data.workingExperience);
-    //   // setEducationExperience(response.data.educationExperience);
-    // });
-  }, []);
+  }, [experience]);
 
   return (
     <Layout>
       <Helmet>
-        <title>Resume - Chester React Personal Portfolio Template</title>
+        <title>Resume - TylerAldrich</title>
         <meta
           name="description"
-          content="Chester React Personal Portfolio Template Resume Page"
+          content="TylerAldrich.dev Resume page"
         />
       </Helmet>
       <Suspense fallback={<Spinner />}>
@@ -63,7 +55,7 @@ function Resumes() {
             <Sectiontitle title="Resume" />
             <Smalltitle title="Working Experience" icon="briefcase" />
             <div className="mi-resume-wrapper">
-              {workingExperience.map((workingExp) => (
+              {Array.isArray(workingExperience) && workingExperience.map((workingExp) => (
                 <Resume key={workingExp.id} resumeData={workingExp} />
               ))}
             </div>
@@ -74,12 +66,4 @@ function Resumes() {
     </Layout>
   );
 }
-  // Education
-            // <Smalltitle title="Education" icon="book" />
-            // <div className="mi-resume-wrapper">
-            //   {educationExperience.map((educatonExp) => (
-            //     <Resume key={educatonExp.id} resumeData={educatonExp} />
-            //   ))}
-            // </div>
-
 export default Resumes;

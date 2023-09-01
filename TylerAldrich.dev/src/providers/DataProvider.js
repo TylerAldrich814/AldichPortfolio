@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getImageUrl } from '../data/db/fireStorage';
+import { getSkillsInfo } from '../data/db/firestore';
 
 
 const ContactContext = React.createContext(null);
@@ -20,10 +21,15 @@ export const useSocial = () => React.useContext(SocialContext);
 export const DataProvider = ({ children }) => {
   const [contact, setContact]         = useState({})
   const [information, setInformation] = useState({})
-  const [skills, setSkills]           = useState({});
-  const [experience, setExperience]   = useState({});
+  const [skills, setSkills]           = useState([]);
+  const [experience, setExperience]   = useState([]);
   const [images, setImages] = useState({});
   const [social, setSocial] = useState({});
+
+  const preloadImage = (url) => {
+    const img = new Image();
+    img.src = url;
+  };
 
   useEffect(() => {
     axios.get("/api/images").then((response) => {
@@ -31,13 +37,16 @@ export const DataProvider = ({ children }) => {
         const urls = await Object.entries(response.data.Images).reduce(
           async (promise, [key, path]) => {
             const acc = await promise;
-            acc[key] = await getImageUrl(path); // Make sure to define getImageUrl
+            const url = await getImageUrl(path);
+            acc[key] = url;
+            preloadImage(url);
             return acc;
           },
           Promise.resolve({})
         );
         setImages(urls);
       };
+
       fetchImages();
     }).catch(e => console.error(`Error Fetching Images: ${e}`));
 
@@ -49,10 +58,19 @@ export const DataProvider = ({ children }) => {
       setContact(response.data);
     }).catch(e => console.error(`Error Fetching Contact Info: ${e}`));
 
-    axios.get("/api/skills").then((response) => {
-      setSkills(response.data);
-    }).catch(e => console.error(`Error Fetching Skills: ${e}`));
-
+    console.log(`BEFORE : ${skills}`)
+    getSkillsInfo().then(fetchedSkills => {
+      console.log(`FETCHED: ${fetchedSkills}`);
+      setSkills(fetchedSkills)
+    })
+    console.log(` AFTER : ${skills}`)
+    //
+    // axios.get("/api/skills").then((response) => {
+    //   console.log(`BEFORE SKILLS : ${skills}`)
+    //   setSkills(response.data).then(f);
+    //   console.log(` AFTER SKILLS : ${skills}`)
+    // }).catch(e => console.error(`Error Fetching Skills: ${e}`));
+    //
     axios.get("/api/experience").then((response) => {
       setExperience(response.data);
     }).catch(e => console.error(`Error Fetching Experience: ${e}`));
@@ -67,7 +85,10 @@ export const DataProvider = ({ children }) => {
       <InformationContext.Provider value={information}>
         <ExperienceContext.Provider value={experience}>
           <ContactContext.Provider value={contact}>
-            <SkillsContext.Provider value={skills}>
+            <SkillsContext.Provider value={{
+              skills,
+              setSkills,
+            }}>
               <SocialContext.Provider value={social}>
               {children}
               </SocialContext.Provider>

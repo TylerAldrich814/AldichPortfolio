@@ -1,9 +1,9 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyCwsCMW6OpTtkgxNFxN95EG6bwu05vfzHM",
-  authDomain: "aldrich-dev-portfolio.firebaseapp.com",
-  projectId: "aldrich-dev-portfolio",
-  storageBucket: "aldrich-dev-portfolio.appspot.com",
-  messagingSenderId: "458687163219",
-  appId: "1:458687163219:web:39ba7590e23378cba28fa6",
-  measurementId: "G-0XS4PTD4WR"
+  apiKey: "AIzaSyBYcl8Q1VzegwVf1J0CKW69m5lNRfWorpE",
+  authDomain: "tyleraldrichdev.firebaseapp.com",
+  projectId: "tyleraldrichdev",
+  storageBucket: "tyleraldrichdev.appspot.com",
+  messagingSenderId: "985368095952",
+  appId: "1:985368095952:web:ab118db546845a894902d5",
+  measurementId: "G-RZDWRM25J5"
 };

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import LineIcon from "react-lineicons";
 import ProgressiveImage from "react-progressive-graceful-image";
 import { Link, NavLink } from "react-router-dom";
-import { useImages, useInformation, useSocial } from "../providers/DataProvider.js";
+// import { useImages, useInformation, useSocial } from "../providers/DataProvider.js";
+import { useFirebaseData } from "../providers/FirebaseDataProvider";
 
 function Header() {
-  const social = useSocial();
-  const images = useImages();
+  const { isLoading, social, images} = useFirebaseData();
+  // const social = useSocial();
+  // const images = useImages();
   const [navigationToggler, setNavigationToggler] = useState(false);
 
   const handleNavigationToggler = () => {
@@ -31,9 +33,8 @@ function Header() {
           <Link to="/">
             <ProgressiveImage
               src={images.brandImage}
-              placeholde="/MyImages/headshot.jpg"
             >
-              {(src) => <img src={src} alt="brandImage" />}
+              {(src) => <img src={src} alt="" />}
             </ProgressiveImage>
           </Link>
         </div>

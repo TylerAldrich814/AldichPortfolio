@@ -58,36 +58,38 @@ const TabbedFiles = () => {
   const toggleTabBar = () => tabbedFiles.length == 0;
 
   return (
-    <div className='tabbedFiles-container'
-      style={{
-        transition: "all 0.9s ease",
-        height:    toggleTabBar() ? "0px" : alreadyOpen ? "28px" : "50px",
-        padding:   toggleTabBar() ? "0px" : "5px",
-        opacity:   toggleTabBar() ? '0%' : '100%',
-        transform: toggleTabBar() ? "translateY(-1px)" : alreadyOpen ? "translateY(-28px)" : "translateY(-49px)"
-      }}
-      onMouseEnter={() => {
-        if(tabbedFiles.length !== 0) setAlreadyOpen(false)
-      }}
-      onMouseLeave={() => {
-        if(tabbedFiles.length !== 0) setAlreadyOpen(true)
-      }}
-    >
-      <div className="tabbedFiles">
-      {absoluteFilePath !== null ? (
-        tabbedFiles.map((file, index ) => (
-          <div
-            style={{
-              color: file === absoluteFilePath ? "#E5D18BBB" : "white",
-            }}
-            className="tabbedFile" key={index}>
-            <span className="tab-close" onClick={() => removeFileFromTabs(file)}>
-              <span>x</span>
-            </span>
-            <span className="filename" onClick={() => setAbsoluteFilePath(file)}>{file}</span>
-          </div>
-        ))
-      ) : (<></>)}
+    <div className='tabbedFiles-position'>
+      <div className='tabbedFiles-container'
+        style={{
+          transition: "all 0.9s ease",
+          height:    toggleTabBar() ? "0px" : alreadyOpen ? "28px" : "50px",
+          padding:   toggleTabBar() ? "0px" : "5px",
+          opacity:   toggleTabBar() ? '0%' : '100%',
+          transform: toggleTabBar() ? "translateY(-1px)" : alreadyOpen ? "translateY(-28px)" : "translateY(-49px)"
+        }}
+        onMouseEnter={() => {
+          if(tabbedFiles.length !== 0) setAlreadyOpen(false)
+        }}
+        onMouseLeave={() => {
+          if(tabbedFiles.length !== 0) setAlreadyOpen(true)
+        }}
+      >
+        <div className="tabbedFiles">
+        {absoluteFilePath !== null ? (
+          tabbedFiles.map((file, index ) => (
+            <div
+              style={{
+                color: file === absoluteFilePath ? "#E5D18BBB" : "white",
+              }}
+              className="tabbedFile" key={index}>
+              <span className="tab-close" onClick={() => removeFileFromTabs(file)}>
+                <span>x</span>
+              </span>
+              <span className="filename" onClick={() => setAbsoluteFilePath(file)}>{file}</span>
+            </div>
+          ))
+        ) : (<></>)}
+        </div>
       </div>
     </div>
   )

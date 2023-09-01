@@ -342,6 +342,7 @@ Mock.onGet("/api/information").reply(async _ => {
 });
 
 Mock.onGet("/api/skills").reply(async _ => {
+  console.log(`BEFORE FETCHING `)
   const response = await getSkillsInfo();
   return [200, response];
 });

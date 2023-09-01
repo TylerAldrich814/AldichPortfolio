@@ -8,22 +8,20 @@ import App from "./App";
 import "./data";
 import * as serviceWorker from "./serviceWorker";
 // import { ImageProvider } from "./providers/ImageProvider";
-import { DataProvider } from "./providers/DataProvider";
 import { ProjectStructureProvider } from "./providers/projectStructureProvider";
 import Particle from "./components/Particle";
+import { FireBaseDataProvider } from "./providers/FirebaseDataProvider";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-// initializeApp(firebaseConfig);
-
 root.render(
-  <DataProvider>
+  <FireBaseDataProvider>
     <ProjectStructureProvider>
       <Particle  />
       <App />
     </ProjectStructureProvider>
-  </DataProvider>
+  </FireBaseDataProvider>
 );
 
 // If you want your app to work offline and load faster, you can change

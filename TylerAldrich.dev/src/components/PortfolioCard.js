@@ -19,7 +19,7 @@ const PortfolioCard = ({ project, index }) => {
     <div className='card-container'>
         <div
           key={index}
-          className={`project-card-front`}
+          className={`project-card`}
         >
           <div className="project-card-title">
             <Smalltitle title={project.projectName}/>
@@ -56,34 +56,30 @@ const PortfolioCard = ({ project, index }) => {
     )
 
   const Back = () => (
-    <div className='card-container'>
-        <div
-          key={index}
-          style={{
-            zIndex: firstLoad ? "-1" : "",
-          }}
-        >
-          <div className="project-card-title">
-            <Smalltitle title={project.projectName}/>
-          </div>
-          <div className='project-card-bottom'>
-            <div className="project-btn-container">
-              <button
-                className="project-card-btn"
-                alt="Show user some of the source code"
-              >
-                Back
-              </button >
-            </div>
+      <div
+        key={index}
+        style={{
+          zIndex: firstLoad ? "-1" : "",
+        }}
+      >
+        <div className="project-card-title">
+          <Smalltitle title={project.projectName}/>
+        </div>
+        <div className='project-card-bottom'>
+          <div className="project-btn-container">
+            <button
+              className="project-card-btn"
+              alt="Show user some of the source code"
+            >
+              Back
+            </button >
           </div>
         </div>
-    </div>
+      </div>
   );
 
   return (
-      <div className={`cards`}>
-        <>{ Front() }</>
-      </div>
+    <>{ Front() }</>
   );
 };
 

@@ -1,14 +1,15 @@
-import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import * as Icon from "react-feather";
 import { Helmet } from "react-helmet";
-import Layout from "../components/Layout";
 import Sectiontitle from "../components/Sectiontitle";
 import Spinner from "../components/Spinner";
-import { useContact } from "../providers/DataProvider";
+// import { useContact } from "../providers/DataProvider";
+import Layout from "../components/Layout.js"
+import sendMessage from "../data/db/firebaseMessaging";
+import { useFirebaseData } from "../providers/FirebaseDataProvider";
 
 function Contact() {
-  const contact = useContact();
+  const { contact } = useFirebaseData();
 
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [emailAddress, setEmailAddress] = useState([]);
@@ -17,29 +18,59 @@ function Contact() {
     name: "",
     email: "",
     subject: "",
+    phoneNumber: "",
     message: "",
   });
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
 
+  const isValudEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  }
+
+
   const submitHandler = (event) => {
+    console.log("SENDING MESSAGE");
     event.preventDefault();
     if (!formdata.name) {
       setError(true);
       setMessage("Name is required");
+      return
     } else if (!formdata.email) {
       setError(true);
       setMessage("Email is required");
+      return
     } else if (!formdata.subject) {
       setError(true);
       setMessage("Subject is required");
+      return
     } else if (!formdata.message) {
       setError(true);
       setMessage("Message is required");
-    } else {
-      setError(false);
-      setMessage("You message has been sent!!!");
+      return
+    } else if (!isValudEmail(formdata.email)) {
+      setError(true);
+      setMessage("Email is not valid, please try again.")
+      return
     }
+    else {
+      setError(false);
+      // setMessage("You message has been sent!!!");
+    }
+    console.log(`formdata: ${formdata}`)
+    sendMessage(formdata)
+      .then(() => {
+        setMessage("Success! I'll reach back to you shortly 🙃");
+
+        setTimeout(() => {
+          setMessage("");
+        }, 5000);
+      })
+      .catch((e) => {
+        console.error(`An Error occurred while triggering Firebase Function\nError: ${e}`)
+        setMessage(response.body);
+      });
   };
   const handleChange = (event) => {
     setFormdata({
@@ -66,11 +97,6 @@ function Contact() {
     setPhoneNumbers(contact.phoneNumbers);
     setEmailAddress(contact.emailAddress);
     setAddress(contact.address);
-    // axios.get("/api/contactinfo").then((response) => {
-    //   setPhoneNumbers(response.data.phoneNumbers);
-    //   setEmailAddress(response.data.emailAddress);
-    //   setAddress(response.data.address);
-    // });
   }, []);
 
   return (
@@ -117,6 +143,19 @@ function Contact() {
                         name="email"
                         id="contact-form-email"
                         value={formdata.email}
+                      />
+                    </div>
+                    <div className="mi-form-field">
+                      <label htmlFor="contact-form-phoneNumber">
+                        Enter your cellphone number
+                      </label>
+                      <input
+                        onChange={handleChange}
+                        type="text"
+                        name="phoneNumber"
+                        id="contact-form-phoneNumber"
+                        value={formdata.phoneNumber}
+                        placeholder="Optional"
                       />
                     </div>
                     <div className="mi-form-field">
