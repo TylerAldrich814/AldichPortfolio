@@ -50,6 +50,7 @@ export const ProjectStructureProvider = ({ children }) => {
   useEffect(() => {
     if (projectId !== null) {
       getProjectStructure(projectId).then(data => {
+        console.log(`DATA: ${data}`);
         setProjectStructure(data);
       }).catch(e => console.error(e));
     }
@@ -65,6 +66,7 @@ export const ProjectStructureProvider = ({ children }) => {
   // this value is updated, and this useEffect is triggered.
   useEffect(() => {
     if( absoluteFilePath !== null ){
+      console.log(`ABPATH: ${absoluteFilePath}`)
       handleFileContents();
     }else if( !firstLoad && absoluteFilePath === null ){
       setSelectedFileContents(null);
@@ -75,6 +77,7 @@ export const ProjectStructureProvider = ({ children }) => {
     let keyFound = false;
     Object.keys(cachedFiles).forEach(key => {
       if( key === absoluteFilePath ){
+        console.log(`KEY: ${key}`)
         setSelectedFileContents(cachedFiles[key])
         keyFound = true;
 

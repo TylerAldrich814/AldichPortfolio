@@ -7,6 +7,7 @@
 /Backend
 /TylerAldrich.dev/node_modules
 /TylerAldrich.dev/portfolioBuildScripts
+/functions/.env
 /.pnp
 .pnp.js
 /package-lock.json

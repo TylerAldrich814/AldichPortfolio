@@ -39,7 +39,7 @@ const PortfolioCodeBlock = () => {
   return (
     <div>
       {isLoading ? (
-        <p> Loading...</p>
+        <></>
       ) : (
         <React.Fragment key="Code Block">
           <div className="code-container"

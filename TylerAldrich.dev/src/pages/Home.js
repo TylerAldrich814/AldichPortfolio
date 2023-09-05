@@ -7,15 +7,7 @@ import { useFirebaseData } from "../providers/FirebaseDataProvider";
 
 function Home({ lightMode }) {
   // const information = useInformation();
-  const { isLoading, information } = useFirebaseData();
-
-  if (isLoading) {
-    return <div style = {{
-
-    }
-    }
-      >Loading...</div>
-  }
+  const { information } = useFirebaseData();
 
   return (
     <Layout>

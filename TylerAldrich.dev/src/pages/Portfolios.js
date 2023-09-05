@@ -10,9 +10,6 @@ import { SelectProjectProvider } from "../components/selectedFile";
 
 import PortfolioCards from "../components/PortfolioCards.js";
 import { useProjectStructure } from "../providers/projectStructureProvider.js";
-import "../scss/components/_project_card.scss"
-import "../scss/components/_directory.scss"
-import "../scss/components/_codeblock.scss";
 import TabbedFiles from "../components/CodeBlockTabs.js";
 import { CodeBlockProvider } from "../providers/CodeBlockInteractions.js";
 import CodeBlockHeader from "../components/codeBlockHeader.js";

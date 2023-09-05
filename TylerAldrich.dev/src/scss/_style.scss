@@ -8,6 +8,7 @@
 @import "basic/utilities";
 
 @import "components/button";
+@import "components/directory";
 @import "components/pagination";
 @import "components/header";
 @import "components/socialicons";
@@ -21,6 +22,11 @@
 @import "components/blog";
 @import "components/blogdetails";
 @import "components/notfound";
+
+@import "components/codeblock";
+@import "components/taloading";
+@import "components/project_card";
+
 
 @import "pages/home";
 @import "pages/about";

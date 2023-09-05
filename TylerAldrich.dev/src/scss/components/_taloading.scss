@@ -1,0 +1,146 @@
+@import '../_variables.scss';
+
+$animatonTime: 5s;
+$circleDiameter: 200px;
+$circleRadius: $circleDiameter / 2;
+$duration: 3s;
+
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+
+  animation: loading $animatonTime ease-out;
+
+  @keyframes loading {
+    from {
+      background-color: rgba(0,0,0,0.9);
+    }
+    to {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+}
+
+.ta-logo {
+  position: absolute;
+  width: $circleDiameter;
+  height: $circleDiameter;
+  align-items: center;
+  text-align: center;
+}
+.ta {
+  font-family: "Montserrat";
+  // font-family: "Roboto Mono";
+  // font-family: "Bodoni";
+  font-weight: 400;
+  position: relative;
+  font-size: 5rem;
+  z-index: 1;
+  margin-top: 50%;
+  transform: translate(0px, 10px);
+
+  .orbitOne{
+    display: inline-block;
+    transform: translate(-48px, -30px);
+  }
+  .orbitTwo {
+    display: inline-block;
+    transform: translate(-140px, -165px);
+    broder: 1px solid yellow;
+  }
+
+  & span:nth-child(1) { // T
+    display: inline-block;
+    transform: rotate(0deg);
+    transform: translate(64px, -35px);
+    font-size: 6rem;
+    font-weight: 400;
+  }
+  span:nth-child(2) { // A
+    display: inline-block;
+    font-size: 6rem;
+    font-weight: 400;
+    transform: translate(2px, -10px) rotate(180deg);
+  }
+  $majorAxis:   150px;
+  $minorAxis: 100px;
+  $Ypos: -150px;
+  span:nth-child(3) { // Dot 1
+    display: inline-block;
+    opacity: 0.1;
+    font-weight: 200;
+  }
+
+
+  span:nth-child(4) { // Dot2
+    display: inline-block;
+    // font-size: 6rem;
+    font-weight: 800;
+    transform: translate(-73px, -10px);
+  }
+
+  animation: color-change $animatonTime infinite alternate;
+  @keyframes color-change {
+    from {
+      color: #e5d18b05;
+      text-shadow: 0 0 5px #e5d18b05,
+                   0 0 10px #e5d18b05,
+                   0 0 15px #e5d18b05,
+                   0 0 20px #e5d18b05,
+                   0 0 25px #e5d18b05,
+                   0 0 30px #e5d18b05,
+                   0 0 35px #e5d18b05;
+    }
+    to {
+      color: #e5d18bA2;
+      text-shadow: 0 0 5px #e5d18bA2,
+                   0 0 10px #e5d18ba2,
+                   0 0 15px #e5d18ba2,
+                   0 0 20px #e5d18ba2,
+                   0 0 25px #e5d18ba2,
+                   0 0 30px #e5d18ba2,
+                   0 0 35px #e5d18ba2;
+    }
+  }
+}
+
+.spinner {
+  position: relative; /* Changed from relative to absolute */
+  border-radius: 50%;
+  margin: auto;
+  border-top: 0.1rem solid darken($color-heading, 10);
+  border-bottom: 0.1rem solid lighten(#E5D18B52, 10);
+  border-radius: 50%;
+  min-height: $circleDiameter; /* Fixed height */
+  min-width: $circleDiameter;
+  animation: spin 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  background-color: #060A060A;
+
+  animation: pulse 2s infinite; // Fixed this line
+
+  @keyframes pulse {
+    0%, 100% { //#E5D18B
+      box-shadow: 0 2px 4px  #E5D18B12,
+                  0 4px 8px  #E5D18B12,
+                  0 8px 16px #E5D18B12;
+    }
+    25%, 75% { //#E5D18B
+      box-shadow: 0 2px 4px  #E5D18B5f
+                  0 4px 8px  #E5D18B5f,
+                  0 8px 16px #E5D18B5f;
+    }
+    50% {
+      box-shadow: 0 5px 14px  #4F524D18,
+                  0 8px 18px  #4F524D18,
+                  0 12px 26px #4F524D18;
+    }
+  }
+}
+

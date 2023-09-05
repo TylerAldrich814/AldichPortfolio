@@ -65,6 +65,12 @@ export const getProjectStructure = async (project) => {
 // onto Firebase Storage using the same File Structure.
 export const getProjectFileContents = async (project, filePath) => {
   const storage = getStorage(app);
+  console.log(`FilePath: ${filePath}`)
+
+  if (filePath[0] === "/"){
+    filePath = filePath.slice(1);
+    console.log(`New FilePath: ${filePath}`)
+  }
   const gsReference = ref(storage, `gs://tyleraldrichdev.appspot.com/portfolio/${project}/${filePath}`)
 
   try {

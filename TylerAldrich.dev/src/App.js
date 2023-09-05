@@ -11,7 +11,7 @@ import Notfound from "./pages/Notfound";
 import Portfolios from "./pages/Portfolios";
 import Resumes from "./pages/Resumes";
 
-function App() {
+function App ({ show }) {
   const [lightMode, setLightMode] = useState(false); // Made it true if you want to load your site light mode primary
 
   lightMode
@@ -28,7 +28,15 @@ function App() {
     }
   };
 
+  if (!show) {
+    return <></>
+  }
+
   return (
+    <div style={{
+      transition: `opacity 2s ease-out`,
+      opacity: show ? 1 : 0,
+    }}>
     <BrowserRouter>
         <Routes>
           <Route path="/" index element={<Home lightMode={lightMode} />} />
@@ -39,6 +47,7 @@ function App() {
           <Route path="*" element={<Notfound />} />
         </Routes>
     </BrowserRouter>
+    </div>
   );
   // <Route path="blogs" element={<Blogs />} />
     // <Route path="blogs/:id/:title" element={<BlogDetails />} />
